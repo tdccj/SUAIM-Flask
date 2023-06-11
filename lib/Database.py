@@ -7,10 +7,12 @@ class DB:
         self.table = []
         self.table_names = []
         self.path = path
+
         self.conn = sqlite3.connect(self.path)  # 连接数据库
         print("数据库连接成功")
         self.cursor = self.conn.cursor()    # 创建游标
 
+    # 创建列表
     def create(self, table_name):
         try:
             self.cursor.execute(f'''CREATE TABLE {table_name}(
@@ -45,5 +47,5 @@ class DB:
 
         # 查询所有列名（查询第一行）
         self.cursor.execute(f"SELECT * FROM {table_name}")
-        self.table = self.cursor.fetchall()
-        print(self.table)
+        name_list = [i[0] for i in self.cursor.description]
+        print(name_list)
