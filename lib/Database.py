@@ -13,7 +13,7 @@ class DB:
         self.cursor = self.conn.cursor()    # 创建游标
 
     # 创建列表
-    def create(self, table_name):
+    def create_table(self, table_name):
         try:
             self.cursor.execute(f'''CREATE TABLE {table_name}(
             name        TEXT    NOT NULL,
@@ -49,3 +49,7 @@ class DB:
         self.cursor.execute(f"SELECT * FROM {table_name}")
         name_list = [i[0] for i in self.cursor.description]
         print(name_list)
+
+    # 创建新物品
+    def create_item(self):
+        pass

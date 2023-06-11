@@ -3,4 +3,4 @@ from lib.Database import DB
 
 
 db = DB("test.db")
-db.create("test_table")
+db.create_table("test_table")
