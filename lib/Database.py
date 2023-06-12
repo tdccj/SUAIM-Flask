@@ -28,7 +28,8 @@ class DB:
             quantity    REAL    NOT NULL,
             price       REAL,
             consumables TEXT,   
-            remark      TEXT
+            remark      TEXT,
+            ascription  TEXT    NOT NULL
             
             
             );''')
@@ -39,12 +40,13 @@ class DB:
             #   price       价值
             #   consumables 是否为消耗品
             #   remark      备注
+            #   ascription  归属人
 
             self.conn.commit()  # 提交
             print("表单创建成功")
 
         except sqlite3.OperationalError as ex:
-            print(f"创建失败:{ex}")
+            print(f"创建失败:{ex}", "\n*报错重名可以无视")
 
         # 查看所有表单
         self.cursor.execute("SELECT tbl_name FROM sqlite_master WHERE type = 'table'")
@@ -57,11 +59,13 @@ class DB:
         print(name_list)
 
     # 创建新物品
-    def create_item(self, name: str, item_type: str, quantity: float, tag: str = None, price: float = None,
+    def create_item(self, name: str, item_type: str, quantity: float, ascription: str, tag: str = None,
+                    price: float = None,
                     consumables: str = None, remark: str = None):
         query = \
-            f"INSERT INTO {tableName} (name,type,quantity,tag,price,consumables,remark) VALUES (?, ?, ?, ?, ?, ?, ?);"
-        values = (name, item_type, quantity, tag, price, consumables, remark)
+            f"INSERT INTO {tableName} (name,type,quantity,ascription,tag,price,consumables,remark) " \
+            f"VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
+        values = (name, item_type, quantity, ascription, tag, price, consumables, remark)
         self.cursor.execute(query, values)
         self.conn.commit()
 
@@ -72,19 +76,23 @@ class DB:
         print(self.cursor.fetchone())
 
     # 更新（修改）物品数据
-    def update_item(self, column_name, _id, _data):
+    def update_item(self, column_name, _id: int, _data):
         self.cursor.execute(F"UPDATE {tableName} SET {column_name} = ? WHERE id = {_id}", (_data,))
 
     # 删除物品数据
-    def delete_item(self, _id):
+    def delete_item(self, _id: int):
         self.cursor.execute(f"DELETE from {tableName} WHERE id = {_id}")
 
     # 查看表内的查看所有数据
     def show_data_all(self):
         self.cursor.execute(f"SELECT * FROM {tableName}")
-        print(self.cursor.fetchall())
+        _fetch = self.cursor.fetchone()
+        print(_fetch)
+        return _fetch
 
     # 根据id查看某行数据
-    def show_data_id(self, _id):
+    def show_data_id(self, _id: int):
         self.cursor.execute(f"SELECT * FROM {tableName} WHERE id = ?", (_id,))
-        print(self.cursor.fetchone())
+        _fetch = self.cursor.fetchone()
+        print(_fetch)
+        return _fetch

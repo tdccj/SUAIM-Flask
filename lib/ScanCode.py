@@ -1,12 +1,18 @@
 # coding = utf-8
 import qrcode
+from lib.Database import DB
 
 
 # 这个库用于扫描
 
+
 class SC:
-    def __init__(self):
-        pass
+    def __init__(self, _db, _table):
+        self.db = DB(_db)
+        self.db.create_table(_table)
 
-    def create(self,_id):
-
+    def create_code(self, _db, _table, _id):
+        _text = f"SUAIM/{_db}/{_table}/{_id}" + str(self.db.show_data_id(_id))
+        _img = qrcode.make(_text)
+        with open("qrcode.png", "wb") as q:
+            _img.save(q)
