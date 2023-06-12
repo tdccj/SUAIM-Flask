@@ -73,6 +73,10 @@ class DB:
     def update_item(self, column_name, _id, _data):
         self.cursor.execute(F"UPDATE {tableName} SET {column_name} = ? WHERE id = {_id}", (_data,))
 
+    # 删除物品数据
+    def delete_item(self, _id):
+        self.cursor.execute(f"DELETE from {tableName} WHERE id = {_id}")
+
     # 查看表内的查看所有数据
     def show_data_all(self):
         self.cursor.execute(f"SELECT * FROM {tableName}")
