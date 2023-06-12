@@ -7,7 +7,7 @@ dBTable = "test_table"
 
 db = DB(dBName)
 db.create_table(dBTable)
-db.create_item("testname", "testtype", 1, "td")
+db.create_item("testname", "testtype", 1, "td", "tag", 1, "no", "备注")
 db.update_item("name", 1, "one")
 db.delete_item(2)
 db.show_data_all()

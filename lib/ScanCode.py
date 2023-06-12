@@ -12,7 +12,7 @@ class SC:
         self.db.create_table(_table)
 
     def create_code(self, _db, _table, _id):
-        _text = f"SUAIM/{_db}/{_table}/{_id}" + str(self.db.show_data_id(_id))
+        _text = f"SUAIM/{_db}/{_table}" + str(self.db.show_data_id(_id)[:-2]+(self.db.show_data_id(_id)[-1],))
         _img = qrcode.make(_text)
         with open("qrcode.png", "wb") as q:
             _img.save(q)
