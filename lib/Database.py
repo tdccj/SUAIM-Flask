@@ -69,7 +69,11 @@ class DB:
         # 只查询一个元素必须传入只有一个元素的元组
         print(self.cursor.fetchone())
 
+    # 更新（修改）物品数据
+    def update_item(self, column_name, _id, _data):
+        self.cursor.execute(F"UPDATE {tableName} SET {column_name} = ? WHERE id = {_id}", (_data,))
+
+    # 查看表内的查看所有数据
     def show_data_all(self):
         self.cursor.execute(f"SELECT * FROM {tableName}")
         print(self.cursor.fetchall())
-
