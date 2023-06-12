@@ -19,6 +19,7 @@ class DB:
 
         try:
             self.cursor.execute(f'''CREATE TABLE {table_name}(
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
             name        TEXT    NOT NULL,
             type        TEXT    NOT NULL,
             tag         TEXT,
@@ -67,4 +68,8 @@ class DB:
         # 传入元组是因为sqlite用迭代处理WHRER
         # 只查询一个元素必须传入只有一个元素的元组
         print(self.cursor.fetchone())
+
+    def show_data_all(self):
+        self.cursor.execute(f"SELECT * FROM {tableName}")
+        print(self.cursor.fetchall())
 
