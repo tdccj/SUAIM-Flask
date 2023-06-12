@@ -1,4 +1,6 @@
 # coding = utf-8
+
+# 这个库用来操作sqlite3数据库
 import sqlite3
 
 tableName = ""
@@ -50,7 +52,7 @@ class DB:
         print(self.cursor.fetchall())  # 获取返回
 
         # 查询所有列名（查询第一行）
-        self.cursor.execute(f"SELECT * FROM {table_name}")
+        self.cursor.execute(f"SELECT * FROM {tableName}")
         name_list = [i[0] for i in self.cursor.description]
         print(name_list)
 
@@ -81,3 +83,8 @@ class DB:
     def show_data_all(self):
         self.cursor.execute(f"SELECT * FROM {tableName}")
         print(self.cursor.fetchall())
+
+    # 根据id查看某行数据
+    def show_data_id(self, _id):
+        self.cursor.execute(f"SELECT * FROM {tableName} WHERE id = ?", (_id,))
+        print(self.cursor.fetchone())
