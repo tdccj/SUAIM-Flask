@@ -35,11 +35,10 @@ class SC:
 
     # 创建打印标签
     def create_print_label(self):
-        from PIL import Image, ImageFont,ImageDraw
+        from PIL import Image, ImageFont, ImageDraw
         with open("label_template/label_template_40mm×30mm.png", "rb") as _img:
-
             # 加载字体
-            _font = ImageFont.truetype(font='font/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.ttf', size=10)
+            _font = ImageFont.truetype(font='font/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.ttf', size=20)
 
             # 创建实例打开图片
             _label = Image.open(_img)
@@ -47,6 +46,8 @@ class SC:
             # 创建可绘制对象
             _draw = ImageDraw.Draw(_label)
             # 写入多行文本
-            _draw.multiline_text((20, 20), "text", _font)
+            _draw.multiline_text((200, 200), "text", fill=(0, 0, 0), font=_font)
+
+            _label.show()
 
             # todo 尚未测试，并且还剩图像
