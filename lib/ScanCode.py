@@ -71,4 +71,3 @@ class SC:
                 num += 1
 
             img_label.show()
-
