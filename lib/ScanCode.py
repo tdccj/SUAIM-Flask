@@ -14,9 +14,9 @@ class SC:
         self._img = None  # 存放生成的二维码
 
     # 创建二维码
-    def create_code(self, _db, _table, _id):
+    def create_code(self, db, table, id_db):
         import qrcode
-        _text = f"SUAIM/{_db}/{_table}" + str(self.db.show_data_id(_id)[:-2] + (self.db.show_data_id(_id)[-1],))
+        text = f"SUAIM/{db}/{table}" + str(self.db.show_data_id(id_db)[:-2] + (self.db.show_data_id(id_db)[-1],))
 
         # 创建实例
         qr = qrcode.QRCode(version=2,
@@ -24,7 +24,7 @@ class SC:
                            box_size=200,
                            border=4)
         # 添加文本
-        qr.add_data(_text)
+        qr.add_data(text)
         # 创建qrcode
         qr.make(fit=True)
 
@@ -34,20 +34,28 @@ class SC:
             self._img.save(q)
 
     # 创建打印标签
-    def create_print_label(self):
+    def create_print_label(self, text: str):
         from PIL import Image, ImageFont, ImageDraw
         with open("label_template/label_template_40mm×30mm.png", "rb") as _img:
             # 加载字体
-            _font = ImageFont.truetype(font='font/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.ttf', size=20)
+            font = ImageFont.truetype(font='font/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.ttf', size=40)
 
             # 创建实例打开图片
-            _label = Image.open(_img)
-
+            img_label = Image.open(_img)
             # 创建可绘制对象
-            _draw = ImageDraw.Draw(_label)
-            # 写入多行文本
-            _draw.multiline_text((200, 200), "text", fill=(0, 0, 0), font=_font)
+            img_draw = ImageDraw.Draw(img_label)
 
-            _label.show()
+            # 将字符串转成竖排文本并写上
+            num = 0
+            for i in text:
+                num += 1
+                x = 15
+                y = -30
+                x += num // 5 * 50
+                y += num % 5 * 50
+                # print(num, x, y)
+                img_draw.multiline_text((x, y), i, font=font, fill=(0, 0, 0))
 
-            # todo 尚未测试，并且还剩图像
+            img_label.show()
+
+            # todo 对英文无法兼容，另缺图像

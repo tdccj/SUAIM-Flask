@@ -76,13 +76,13 @@ class DB:
         print(self.cursor.fetchone())
 
     # 更新（修改）物品数据
-    def update_item(self, column_name, _id: int, _data):
-        self.cursor.execute(F"UPDATE {tableName} SET {column_name} = ? WHERE id = {_id}", (_data,))
+    def update_item(self, column_name, id_db: int, data):
+        self.cursor.execute(F"UPDATE {tableName} SET {column_name} = ? WHERE id = {id_db}", (data,))
         self.conn.commit()
 
     # 删除物品数据
-    def delete_item(self, _id: int):
-        self.cursor.execute(f"DELETE from {tableName} WHERE id = {_id}")
+    def delete_item(self, id_db: int):
+        self.cursor.execute(f"DELETE from {tableName} WHERE id = {id_db}")
         self.conn.commit()
 
     # 查看表内的查看所有数据
@@ -93,8 +93,8 @@ class DB:
         return _fetch
 
     # 根据id查看某行数据
-    def show_data_id(self, _id: int):
-        self.cursor.execute(f"SELECT * FROM {tableName} WHERE id = ?", (_id,))
+    def show_data_id(self, id_db: int):
+        self.cursor.execute(f"SELECT * FROM {tableName} WHERE id = ?", (id_db,))
         _fetch = self.cursor.fetchone()
         print(_fetch)
         return _fetch
