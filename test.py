@@ -15,3 +15,7 @@ db.show_data_id(3)
 sc = SC(dBName, dBTable)
 sc.create_code(dBName, dBTable, 1)
 sc.create_print_label("标签wwadwad")
+sc.create_print_label("hisahdiah")
+sc.create_print_label("你好苏艾姆我的朋友")
+
+
