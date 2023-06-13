@@ -46,8 +46,8 @@ class SC:
             img_draw = ImageDraw.Draw(img_label)
 
             # 复制图片并缩放
-            copy = self._img.resize((200,200))
-            img_label.paste(copy,(110,20))
+            copy = self._img.resize((200, 200))
+            img_label.paste(copy, (110, 20))
 
             # 将字符串转成竖排文本并写上
             # 未来可以做个横排版切换选项
@@ -70,9 +70,5 @@ class SC:
                     img_draw.multiline_text((x, y), i, font=font, fill=(0, 0, 0))
                 num += 1
 
-
-
-
             img_label.show()
 
-            # todo 缺图像
