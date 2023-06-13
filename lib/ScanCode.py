@@ -46,16 +46,25 @@ class SC:
             img_draw = ImageDraw.Draw(img_label)
 
             # 将字符串转成竖排文本并写上
+            # 竖排版对英文不太友好，未来可以做个横排版切换选项
             num = 0
             for i in text:
                 num += 1
-                x = 15
-                y = -30
-                x += num // 5 * 50
-                y += num % 5 * 50
-                # print(num, x, y)
-                img_draw.multiline_text((x, y), i, font=font, fill=(0, 0, 0))
+                if i.encode( 'UTF-8' ).isalpha():
+                    x = 15
+                    y = 10
+                    x += num // 5 * 50
+                    y += num % 5 * 35
+                    print(num, x, y,1)
+                    img_draw.multiline_text((x, y), i, font=font, fill=(0, 0, 0))
+                elif not i.encode( 'UTF-8' ).isalpha():
+                    x = 15
+                    y = -30
+                    x += num // 5 * 50
+                    y += num % 5 * 50
+                    print(num, x, y,2)
+                    img_draw.multiline_text((x, y), i, font=font, fill=(0, 0, 0))
 
             img_label.show()
 
-            # todo 对英文无法兼容，另缺图像
+            # todo 缺图像
