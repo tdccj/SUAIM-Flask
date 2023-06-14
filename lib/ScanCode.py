@@ -59,15 +59,15 @@ class SC:
                     y = 28
                     x += num // 6 * 40
                     y += num % 6 * 30
-                    print(num, x, y, 1)
+                    # print(num, x, y, 1)
                     img_draw.multiline_text((x, y), i, font=font, fill=(0, 0, 0))
                 elif not i.encode('UTF-8').isalpha():
                     x = 15
                     y = 28
                     x += num // 6 * 40
                     y += num % 6 * 30
-                    print(num, x, y, 2)
+                    # print(num, x, y, 2)
                     img_draw.multiline_text((x, y), i, font=font, fill=(0, 0, 0))
                 num += 1
 
-            img_label.show()
+            img_label.save("print_label.png")
