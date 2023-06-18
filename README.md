@@ -21,9 +21,9 @@ Small-Scale Universal Asset/Inventory Management 泛用小型资产/库存管理
 > 初期尽量采用现成框架，实现基础框架，具备开源、较轻量级、自托管、手机扫码出入库管理等特性
 > 逐步实现高拓展性、多平台终端、现代化ui、docker部署
 > 尽量缩短出入库流程，降低重复操作
-> 后端采用Python+SQLite数据库
+> 后端采用Python+flaks+SQLite数据库
 > 前端采用Dart+Flutter多端开发
-> 备选flask框架+h5开发
+> 备选Django框架+h5开发
 
 
 ## 关键事项
