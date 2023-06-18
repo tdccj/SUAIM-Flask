@@ -9,14 +9,14 @@ class SC:
     def __init__(self, _db, _table):
         # 创建数据库实例
         self._db = DB(_db)  # 连接数据库
-        self._db.create_table(_table)  # 连接表
+        self._db.connect_table(_table)  # 连接表
 
         self._img = None  # 存放生成的二维码
 
     # 创建二维码
     def create_code(self, db, table, id_db):
         import qrcode
-        text = f"SUAIM/{db}/{table}" + str(self._db.show_data_id(id_db)[:-2] + (self._db.show_data_id(id_db)[-1],))
+        text = f"SUAIM/{db}/{table}" + str(self._db.get_item_info(id_db)[:-2] + (self._db.get_item_info(id_db)[-1],))
 
         # 创建实例
         qr = qrcode.QRCode(version=2,

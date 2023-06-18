@@ -14,8 +14,8 @@ class DB:
         print("数据库连接成功")
         self.cursor = self.conn.cursor()  # 创建游标
 
-    # 创建列表
-    def create_table(self, table_name):
+    # 连接列表
+    def connect_table(self, table_name):
         global tableName
         tableName = table_name
 
@@ -38,7 +38,7 @@ class DB:
             #   tag         标签
             #   quantity    数量
             #   price       价值
-            #   consumables 是否为消耗品
+            #   consumables 是否为消耗品(消耗品周期)
             #   remark      备注
             #   ascription  归属人
 
@@ -86,14 +86,14 @@ class DB:
         self.conn.commit()
 
     # 查看表内的查看所有数据
-    def show_data_all(self):
+    def get_item_all(self):
         self.cursor.execute(f"SELECT * FROM {tableName}")
         _fetch = self.cursor.fetchone()
         print(_fetch)
         return _fetch
 
     # 根据id查看某行数据
-    def show_data_id(self, id_db: int):
+    def get_item_info(self, id_db: int):
         self.cursor.execute(f"SELECT * FROM {tableName} WHERE id = ?", (id_db,))
         _fetch = self.cursor.fetchone()
         print(_fetch)
