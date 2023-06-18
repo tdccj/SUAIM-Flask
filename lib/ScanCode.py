@@ -71,3 +71,6 @@ class SC:
                 num += 1
 
             img_label.save("print_label.png")
+
+    def printer_label(self):
+        pass
