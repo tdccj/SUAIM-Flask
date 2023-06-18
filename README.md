@@ -1,4 +1,4 @@
-# SUAIM溯物
+# SUAIM溯物-Flaks后端
 Small-Scale Universal Asset/Inventory Management 泛用小型资产/库存管理系统
 
 ## 背景
