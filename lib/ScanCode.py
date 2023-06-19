@@ -34,6 +34,7 @@ class SC:
             self._img.save(q)
 
     # 创建打印标签
+    # 暂时仅限40*30
     def create_print_label(self, text: str):
         from PIL import Image, ImageFont, ImageDraw
         with open("label_template/label_template_40mm×30mm.png", "rb") as _img:
@@ -72,5 +73,6 @@ class SC:
 
             img_label.save("print_label.png")
 
-    def printer_label(self):
-        pass
+    # 调用打印机打印，未完成，已废弃，改为前端执行
+    # def print_label(self):
+    #     pass

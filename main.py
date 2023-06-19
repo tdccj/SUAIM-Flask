@@ -1,7 +1,8 @@
 # coding = utf-8
 from lib.Database import DB
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from gevent import pywsgi
+from lib.ScanCode import SC
 
 app = Flask(__name__)
 
@@ -49,6 +50,17 @@ def get_all_data(db_path, db_table):
 #     db.connect_table(db_table)
 #     all_name = db.get_item_all()
 
+
+# 获取qrcode
+@app.route('/api/<string:db_path>/<string:db_table>/<string:db_id>/get_qrcode', methods=['GET'])
+def get_qrcode(db_path, db_table, db_id):
+    # 创建qrcode
+    sc = SC(db_path, db_table)
+    sc.create_code(db_path, db_table, db_id)
+
+    # 读取并返回qrcode
+    qrcode_path = 'qrcode.png'
+    return send_file(qrcode_path, mimetype='image/jpeg')
 
 
 # 在表中创建新物品
