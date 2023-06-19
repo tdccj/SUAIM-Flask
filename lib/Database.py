@@ -74,7 +74,11 @@ class DB:
         self.cursor.execute(f"SELECT * FROM {tableName} WHERE name=?", (name,))
         # 传入元组是因为sqlite用迭代处理WHRER
         # 只查询一个元素必须传入只有一个元素的元组
-        print(self.cursor.fetchone())
+
+        self.cursor.execute("SELECT last_insert_rowid();")
+        row_id = self.cursor.fetchone()
+        print(row_id)
+        return row_id
 
     # 更新（修改）物品数据
     def update_item(self, column_name, id_db: int, data):

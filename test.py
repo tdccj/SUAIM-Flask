@@ -8,10 +8,10 @@ dBTable = "test_table"
 
 db = DB(dBName)
 db.connect_table(dBTable)
-# db.create_item("testname", "testtype", 1, "td", "tag", 1, "no", "备注")
+db.create_item("testname", "testtype", 1, "td", "tag", 1, "no", "备注")
 # db.update_item("name", 1, "one")
 # db.delete_item(2)
-# db.get_item_all()
+db.get_item_all()
 # db.get_item_data(3)
 # sc = SC(dBName, dBTable)
 # sc.create_code(dBName, dBTable, 1)
