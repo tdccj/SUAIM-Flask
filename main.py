@@ -51,17 +51,24 @@ def create_item(db_path, db_table):
 
     # get data
     data = request.get_json()
-    name = data('name')
-    item_type = data('item_type')
+    name = data['name']
+    item_type = data['type']
     quantity = data['quantity']
     ascription = data['ascription']
-    tag = data['tag']
-    price = data['price']
-    consumables = data['consumables']
-    remark = data['remark']
+    try:
+        tag = data['tag']
+        price = data['price']
+        consumables = data['consumables']
+        remark = data['remark']
+    except KeyError:
+        tag = None
+        price = None
+        consumables = None
+        remark = None
 
     # create item
     db.create_item(name, item_type, quantity, ascription, tag, price, consumables, remark)
+    return jsonify({'result': 'success'}), 200
 
 
 if __name__ == '__main__':

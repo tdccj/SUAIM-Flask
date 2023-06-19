@@ -19,6 +19,7 @@ class DB:
         global tableName
         tableName = table_name
 
+        # 必填包括：name、type、quantity、ascription
         try:
             self.cursor.execute(f'''CREATE TABLE {table_name}(
             id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -88,7 +89,7 @@ class DB:
     # 查看表内的查看所有数据
     def get_item_all(self):
         self.cursor.execute(f"SELECT * FROM {tableName}")
-        _fetch = self.cursor.fetchone()
+        _fetch = self.cursor.fetchall()
         print(_fetch)
         return _fetch
 
