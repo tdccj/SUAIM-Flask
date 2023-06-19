@@ -93,7 +93,7 @@ class DB:
         return _fetch
 
     # 根据id查看某行数据
-    def get_item_info(self, id_db: int):
+    def get_item_data(self, id_db: int):
         self.cursor.execute(f"SELECT * FROM {tableName} WHERE id = ?", (id_db,))
         _fetch = self.cursor.fetchone()
         print(_fetch)
