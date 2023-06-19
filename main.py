@@ -43,7 +43,7 @@ def get_all_data(db_path, db_table):
 
 
 # 在表中创建新物品
-@app.route('/api/<string:db_path>/<string:db_table>/create_item', methos=['POST'])
+@app.route('/api/<string:db_path>/<string:db_table>/create_item', methods=['POST'])
 def create_item(db_path, db_table):
     # connect database
     db = DB(db_path)
