@@ -31,7 +31,7 @@ def get_item_data(db_path, db_table, item_id):
 
 
 # 用于获取列表内的所有数据
-@app.route('/api/<string:db_path>/<string:db_table>', methods=['GET'])
+@app.route('/api/<string:db_path>/<string:db_table>/get_all_data', methods=['GET'])
 def get_all_data(db_path, db_table):
     # 连接并查询
     db = DB(db_path)
@@ -88,6 +88,15 @@ def create_print_label(db_path, db_table, db_id):
 def connect_database(db_path):
     DB(db_path)
     return db_path
+
+
+# 连接或创建表单
+@app.route('/api/<string:db_path>/<string:db_table>', methods=['GET'])
+def connect_table(db_path, db_table):
+    re = db_table
+    db = DB(db_path)
+    db.connect_table(db_table)
+    return re
 
 
 # 在表中创建新物品
