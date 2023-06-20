@@ -51,8 +51,8 @@ def get_all_data(db_path, db_table):
 #     all_name = db.get_item_all()
 
 
-# 获取qrcode
-@app.route('/api/<string:db_path>/<string:db_table>/<string:db_id>/get_qrcode', methods=['GET'])
+# 获取QRCode
+@app.route('/api/<string:db_path>/<string:db_table>/<int:db_id>/get_qrcode', methods=['GET'])
 def get_qrcode(db_path, db_table, db_id):
     # 创建qrcode
     sc = SC(db_path, db_table)
@@ -61,6 +61,23 @@ def get_qrcode(db_path, db_table, db_id):
     # 读取并返回qrcode
     qrcode_path = 'qrcode.png'
     return send_file(qrcode_path, mimetype='image/jpeg')
+
+
+# 创建QRCode并获取打印标签
+@app.route('/api/<string:db_path>/<string:db_table>/<int:db_id>/print_label', methods=['POST'])
+def create_print_label(db_path, db_table, db_id):
+    # 从json中获取字符
+    data = request.get_json()
+    text = data['text']
+
+    # 创建qrcode
+    sc = SC(db_path, db_table)
+    sc.create_code(db_path, db_table, db_id)
+    sc.create_print_label(text)
+
+    # 读取并返回print_label
+    label_path = 'print_label.png'
+    return send_file(label_path, mimetype='image/jpeg')
 
 
 # 在表中创建新物品
