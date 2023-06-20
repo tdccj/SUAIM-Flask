@@ -6,6 +6,9 @@ from lib.ScanCode import SC
 
 app = Flask(__name__)
 
+# 将默认url字符集改成utf-8，以接收中文
+app.url_map.charset = 'utf-8'
+
 
 # 以id查询物品信息
 @app.route('/api/<string:db_path>/<string:db_table>/<int:item_id>', methods=['GET'])
@@ -78,6 +81,13 @@ def create_print_label(db_path, db_table, db_id):
     # 读取并返回print_label
     label_path = 'print_label.png'
     return send_file(label_path, mimetype='image/jpeg')
+
+
+# 连接或创建db_path
+@app.route('/api/<string:db_path>', methods=['GET'])
+def connect_database(db_path):
+    DB(db_path)
+    return db_path
 
 
 # 在表中创建新物品
