@@ -49,15 +49,15 @@ class DB:
         except sqlite3.OperationalError as ex:
             print(f"创建失败:{ex}", "\n*报错重名可以无视")
 
-        # 查看所有表单
-        self.cursor.execute("SELECT tbl_name FROM sqlite_master WHERE type = 'table'")
+        # # 查看所有表单
+        # self.cursor.execute("SELECT tbl_name FROM sqlite_master WHERE type = 'table'")
+        #
+        # print(self.cursor.fetchall())  # 获取返回
 
-        print(self.cursor.fetchall())  # 获取返回
-
-        # 查询所有列名（查询第一行）
-        self.cursor.execute(f"SELECT * FROM {tableName}")
-        name_list = [i[0] for i in self.cursor.description]
-        print(name_list)
+        # # 查询所有列名（查询第一行）
+        # self.cursor.execute(f"SELECT * FROM {tableName}")
+        # name_list = [i[0] for i in self.cursor.description]
+        # print(name_list)
 
     # 创建新物品
     def create_item(self, name: str, item_type: str, quantity: float, ascription: str, tag: str = None,
@@ -89,6 +89,15 @@ class DB:
     def delete_item(self, id_db: int):
         self.cursor.execute(f"DELETE from {tableName} WHERE id = {id_db}")
         self.conn.commit()
+
+    # 删除表   谨慎操作！！
+    def delete_table(self, db_table):
+        self.cursor.execute(f"DROP TABLE {db_table};")
+
+    # 查看所有表
+    def get_table_all(self):
+        self.cursor.execute("SELECT tbl_name FROM sqlite_master WHERE type = 'table'")
+        return self.cursor.fetchall()
 
     # 查看表内的查看所有数据
     def get_item_all(self):

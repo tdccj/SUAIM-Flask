@@ -128,6 +128,12 @@ def create_item(db_path, db_table):
     return jsonify({'result': 'success'}), 200
 
 
+# 删除表
+@app.route('/api/<string:db_path>/<string:table>', methods=['DELETE'])
+def delete_database(db_path, db_table):
+    pass
+
+
 if __name__ == '__main__':
     # 设置端口并运行
     server = pywsgi.WSGIServer(('127.0.0.1', 5000), app)

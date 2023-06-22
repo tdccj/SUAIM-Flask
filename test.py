@@ -42,3 +42,9 @@ from lib.ScanCode import SC
 # else:
 #     print('Failed to create user')
 # print(response)
+
+db = DB('test.db')
+db.connect_table('hi')
+print(db.get_table_all())
+db.delete_table('hi')
+print(db.get_table_all())
