@@ -11,7 +11,7 @@ app.url_map.charset = 'utf-8'
 
 
 # 以id查询物品信息
-@app.route('/api/<string:db_path>/<string:db_table>/<int:item_id>', methods=['GET'])
+@app.route('/api/get/<string:db_path>/<string:db_table>/<int:item_id>', methods=['GET'])
 def get_item_data(db_path, db_table, item_id):
     # 连接数据库列表并查询
     db = DB(db_path)
@@ -30,8 +30,15 @@ def get_item_data(db_path, db_table, item_id):
     return jsonify(item_info)
 
 
+# 获取所有列表
+@app.route('/api/get/<string:db_path>/table_all', methods=['GET'])
+def get_table_all(db_path):
+    db = DB(db_path)
+    return db.get_table_all()
+
+
 # 用于获取列表内的所有数据
-@app.route('/api/<string:db_path>/<string:db_table>/get_all_data', methods=['GET'])
+@app.route('/api/get/<string:db_path>/<string:db_table>/all_data', methods=['GET'])
 def get_all_data(db_path, db_table):
     # 连接并查询
     db = DB(db_path)
@@ -46,16 +53,8 @@ def get_all_data(db_path, db_table):
     return jsonify(all_data)
 
 
-# 用于获取表内所有name，未完成，暂且废弃
-# @app.route('/api/<string:db_path>/<string:db_table>/name', methods=['GET'])
-# def get_all_name(db_path, db_table):
-#     db = DB(db_path)
-#     db.connect_table(db_table)
-#     all_name = db.get_item_all()
-
-
 # 获取QRCode
-@app.route('/api/<string:db_path>/<string:db_table>/<int:db_id>/get_qrcode', methods=['GET'])
+@app.route('/api/get/<string:db_path>/<string:db_table>/<int:db_id>/qrcode', methods=['GET'])
 def get_qrcode(db_path, db_table, db_id):
     # 创建qrcode
     sc = SC(db_path, db_table)
@@ -67,7 +66,7 @@ def get_qrcode(db_path, db_table, db_id):
 
 
 # 创建QRCode并获取打印标签
-@app.route('/api/<string:db_path>/<string:db_table>/<int:db_id>/print_label', methods=['POST'])
+@app.route('/api/get/<string:db_path>/<string:db_table>/<int:db_id>/print_label', methods=['POST'])
 def create_print_label(db_path, db_table, db_id):
     # 从json中获取字符
     data = request.get_json()
@@ -83,15 +82,15 @@ def create_print_label(db_path, db_table, db_id):
     return send_file(label_path, mimetype='image/jpeg')
 
 
-# 连接或创建db_path
-@app.route('/api/<string:db_path>', methods=['GET'])
+# 连接或创建数据库
+@app.route('/api/connect/<string:db_path>', methods=['GET'])
 def connect_database(db_path):
     DB(db_path)
     return db_path
 
 
 # 连接或创建表单
-@app.route('/api/<string:db_path>/<string:db_table>', methods=['GET'])
+@app.route('/api/connect/<string:db_path>/<string:db_table>', methods=['GET'])
 def connect_table(db_path, db_table):
     re = db_table
     db = DB(db_path)
@@ -100,7 +99,7 @@ def connect_table(db_path, db_table):
 
 
 # 在表中创建新物品
-@app.route('/api/<string:db_path>/<string:db_table>/create_item', methods=['POST'])
+@app.route('/api/create/<string:db_path>/<string:db_table>/item', methods=['POST'])
 def create_item(db_path, db_table):
     # connect database
     db = DB(db_path)
@@ -129,9 +128,20 @@ def create_item(db_path, db_table):
 
 
 # 删除表
-@app.route('/api/<string:db_path>/<string:table>', methods=['DELETE'])
-def delete_database(db_path, db_table):
-    pass
+@app.route('/api/delete/<string:db_path>/<string:db_table>', methods=['DELETE'])
+def delete_table(db_path, db_table):
+    print(db_path,db_table)
+    db = DB(db_path)
+    db.delete_table(db_table)
+    return "successfully"
+
+
+# 用于获取表内所有name，未完成，暂且废弃
+# @app.route('/api/<string:db_path>/<string:db_table>/name', methods=['GET'])
+# def get_all_name(db_path, db_table):
+#     db = DB(db_path)
+#     db.connect_table(db_table)
+#     all_name = db.get_item_all()
 
 
 if __name__ == '__main__':

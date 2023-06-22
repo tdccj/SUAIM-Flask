@@ -43,8 +43,19 @@ from lib.ScanCode import SC
 #     print('Failed to create user')
 # print(response)
 
-db = DB('test.db')
-db.connect_table('hi')
-print(db.get_table_all())
-db.delete_table('hi')
-print(db.get_table_all())
+# db = DB('test.db')
+# db.connect_table('hi')
+# print(db.get_table_all())
+# db.delete_table('hi')
+# print(db.get_table_all())
+
+
+import requests
+
+url = 'http://127.0.0.1:5000/api/delete/test.db/hi'
+response = requests.delete(url)
+if response.status_code == 200:
+    print('successfully')
+else:
+    print('Failed')
+print(response)
