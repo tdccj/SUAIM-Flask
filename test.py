@@ -50,12 +50,23 @@ from lib.ScanCode import SC
 # print(db.get_table_all())
 
 
-import requests
+# import requests
+#
+# url = 'http://127.0.0.1:5000/api/delete/test.db/hi'
+# response = requests.delete(url)
+# if response.status_code == 200:
+#     print('successfully')
+# else:
+#     print('Failed')
+# print(response)
 
-url = 'http://127.0.0.1:5000/api/delete/test.db/hi'
-response = requests.delete(url)
-if response.status_code == 200:
-    print('successfully')
-else:
-    print('Failed')
-print(response)
+
+# import requests
+#
+# url = 'http://127.0.0.1:5000/api/delete/test.db/test_table/1'
+# response = requests.delete(url)
+# if response.status_code == 200:
+#     print('successfully')
+# else:
+#     print('Failed')
+# print(response)

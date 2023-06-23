@@ -136,6 +136,14 @@ def delete_table(db_path, db_table):
     return "successfully"
 
 
+@app.route('/api/delete/<string:db_path>/<string:db_table>/<int:db_id>',methods=['DELETE'])
+def delete_item(db_path,db_table,db_id):
+    db = DB(db_path)
+    db.connect_table(db_table)
+    db.delete_item(db_id)
+    return "successfully"
+
+
 # 用于获取表内所有name，未完成，暂且废弃
 # @app.route('/api/<string:db_path>/<string:db_table>/name', methods=['GET'])
 # def get_all_name(db_path, db_table):
