@@ -70,3 +70,20 @@ from lib.ScanCode import SC
 # else:
 #     print('Failed')
 # print(response)
+
+
+# db = DB('test.db')
+# db.connect_table('a')
+# print(db.get_table_all())
+# db.rename_table('a','c')
+# print(db.get_table_all())
+
+
+import requests
+
+url = 'http://127.0.0.1:5000/api/rename/test.db/table'
+data = {'old_name': 'd',"new_name":'e'}
+headers = {'Content-Type': 'application/json'}
+response = requests.post(url, json=data, headers=headers)
+re = response.content
+print(re)

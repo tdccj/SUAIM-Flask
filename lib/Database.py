@@ -94,6 +94,15 @@ class DB:
     def delete_table(self, db_table):
         self.cursor.execute(f"DROP TABLE {db_table};")
 
+    # 修改表名
+    def rename_table(self, old_name, new_name):
+        try:
+            self.cursor.execute(f"ALTER TABLE {old_name} RENAME TO {new_name}")
+            return "successfully"
+        except sqlite3.OperationalError as EX:
+            print("error:",EX)
+            return EX
+
     # 查看所有表
     def get_table_all(self):
         self.cursor.execute("SELECT tbl_name FROM sqlite_master WHERE type = 'table'")

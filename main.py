@@ -37,22 +37,6 @@ def get_table_all(db_path):
     return db.get_table_all()
 
 
-# 用于获取列表内的所有数据
-@app.route('/api/get/<string:db_path>/<string:db_table>/all_data', methods=['GET'])
-def get_all_data(db_path, db_table):
-    # 连接并查询
-    db = DB(db_path)
-    db.connect_table(db_table)
-    all_data = db.get_item_all()
-
-    # 判断查询结果是否为空
-    if all_data is None:
-        return jsonify({'error': 'data not found in this table'}), 404
-    print(all_data)
-
-    return jsonify(all_data)
-
-
 # 获取QRCode
 @app.route('/api/get/<string:db_path>/<string:db_table>/<int:db_id>/qrcode', methods=['GET'])
 def get_qrcode(db_path, db_table, db_id):
@@ -89,13 +73,19 @@ def connect_database(db_path):
     return db_path
 
 
-# 连接或创建表单
+# 连接或创建表单，并返回内容
 @app.route('/api/connect/<string:db_path>/<string:db_table>', methods=['GET'])
 def connect_table(db_path, db_table):
-    re = db_table
     db = DB(db_path)
     db.connect_table(db_table)
-    return re
+    all_data = db.get_item_all()
+
+    # 判断查询结果是否为空
+    if all_data is None:
+        return jsonify({'error': 'data not found in this table'}), 404
+    print(all_data)
+
+    return jsonify(all_data)
 
 
 # 在表中创建新物品
@@ -130,18 +120,32 @@ def create_item(db_path, db_table):
 # 删除表
 @app.route('/api/delete/<string:db_path>/<string:db_table>', methods=['DELETE'])
 def delete_table(db_path, db_table):
-    print(db_path,db_table)
+    print(db_path, db_table)
     db = DB(db_path)
     db.delete_table(db_table)
     return "successfully"
 
 
-@app.route('/api/delete/<string:db_path>/<string:db_table>/<int:db_id>',methods=['DELETE'])
-def delete_item(db_path,db_table,db_id):
+# 删除物品
+@app.route('/api/delete/<string:db_path>/<string:db_table>/<int:db_id>', methods=['DELETE'])
+def delete_item(db_path, db_table, db_id):
     db = DB(db_path)
     db.connect_table(db_table)
     db.delete_item(db_id)
     return "successfully"
+
+
+# 修改表名
+@app.route('/api/rename/<string:db_path>/table', methods=['POST'])
+def rename_table(db_path):
+    data = request.get_json()
+    old_name = data["old_name"]
+    new_name = data["new_name"]
+
+    db = DB(db_path)
+    re = db.rename_table(old_name, new_name)
+
+    return str(re)
 
 
 # 用于获取表内所有name，未完成，暂且废弃
@@ -150,6 +154,22 @@ def delete_item(db_path,db_table,db_id):
 #     db = DB(db_path)
 #     db.connect_table(db_table)
 #     all_name = db.get_item_all()
+
+
+# # 用于获取列表内的所有数据 已废弃，被connect_table取代
+# @app.route('/api/get/<string:db_path>/<string:db_table>/all_data', methods=['GET'])
+# def get_all_data(db_path, db_table):
+#     # 连接并查询
+#     db = DB(db_path)
+#     db.connect_table(db_table)
+#     all_data = db.get_item_all()
+#
+#     # 判断查询结果是否为空
+#     if all_data is None:
+#         return jsonify({'error': 'data not found in this table'}), 404
+#     print(all_data)
+#
+#     return jsonify(all_data)
 
 
 if __name__ == '__main__':
