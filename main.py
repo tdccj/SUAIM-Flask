@@ -148,6 +148,41 @@ def rename_table(db_path):
     return str(re)
 
 
+# 修改物品
+@app.route('/api/update/<string:db_path>/<string:db_table>/<int:db_id>', methods=['POST'])
+def update_item(db_path, db_table, db_id):
+    # 更新数据库中的项。
+    #
+    # 参数:
+    #   db_path - 数据库路径
+    #   db_table - 数据表名称
+    #   db_id - 要更新的项的ID
+    #
+    # 返回:   更新后的项数据
+    #
+    # Raises:
+    #   无异常抛出。
+
+    # 从请求的JSON数据中获取要更新的列名和数据
+    column_name = request.get_json()['column_name']
+    data = request.get_json()['data']
+
+    # 连接到指定的数据库
+    db = DB(db_path)
+
+    # 连接到指定的数据表
+    db.connect_table(db_table)
+
+    # 使用给定的列名、ID和数据更新数据表中的项
+    db.update_item(column_name, db_id, data)
+
+    # 获取更新后的项数据
+    item = db.get_item_data(db_id)
+
+    # 返回更新后的项数据
+    return str(item)
+
+
 # 用于获取表内所有name，未完成，暂且废弃
 # @app.route('/api/<string:db_path>/<string:db_table>/name', methods=['GET'])
 # def get_all_name(db_path, db_table):

@@ -79,10 +79,20 @@ from lib.ScanCode import SC
 # print(db.get_table_all())
 
 
+# import requests
+#
+# url = 'http://127.0.0.1:5000/api/rename/test.db/table'
+# data = {'old_name': 'd',"new_name":'e'}
+# headers = {'Content-Type': 'application/json'}
+# response = requests.post(url, json=data, headers=headers)
+# re = response.content
+# print(re)
+
+
 import requests
 
-url = 'http://127.0.0.1:5000/api/rename/test.db/table'
-data = {'old_name': 'd',"new_name":'e'}
+url = 'http://127.0.0.1:5000/api/update/test.db/test_table/4'
+data = {'column_name': 'name', "data": 'up'}
 headers = {'Content-Type': 'application/json'}
 response = requests.post(url, json=data, headers=headers)
 re = response.content
