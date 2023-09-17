@@ -3,6 +3,7 @@ from lib.Database import DB
 from flask import Flask, jsonify, request, send_file
 from gevent import pywsgi
 from lib.ScanCode import SC
+from lib.Printer import printer
 
 app = Flask(__name__)
 
@@ -176,6 +177,21 @@ def update_item(db_path, db_table, db_id):
     item = db.get_item_data(db_id)
 
     return str(item)
+
+
+# 调用打印机打印标签
+@app.route('/api/print_label', methods=['POST'])
+def print_label():
+    data = request.get_json()
+    qr_path = data['qr_path']
+    _id = data['_id']
+    _name = data['_name']
+    _type = data['_type']
+    _ascription = data['_ascription']
+
+    # 调用打印机打印标签
+    printer(qr_path=qr_path, _id=_id, _name=_name, _type=_type, _ascription=_ascription)
+    return "successfully"
 
 
 # 用于获取表内所有name，未完成，暂且废弃
