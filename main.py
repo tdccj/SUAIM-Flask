@@ -167,19 +167,14 @@ def update_item(db_path, db_table, db_id):
     column_name = request.get_json()['column_name']
     data = request.get_json()['data']
 
-    # 连接到指定的数据库
     db = DB(db_path)
-
-    # 连接到指定的数据表
     db.connect_table(db_table)
 
-    # 使用给定的列名、ID和数据更新数据表中的项
     db.update_item(column_name, db_id, data)
 
     # 获取更新后的项数据
     item = db.get_item_data(db_id)
 
-    # 返回更新后的项数据
     return str(item)
 
 
