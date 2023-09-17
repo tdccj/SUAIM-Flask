@@ -30,7 +30,7 @@ class SC:
 
         # 保存qrcode
         self._img = qr.make_image()
-        with open("qrcode.png", "wb") as q:
+        with open("../qrcode.png", "wb") as q:
             self._img.save(q)
 
     # 创建打印标签

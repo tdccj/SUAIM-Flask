@@ -16,7 +16,7 @@ DataList = [
 
     ]
 
-image = Image.open('./qrcode.png')
+image = Image.open('qrcode.png')
 # image = image.resize((150, 150), Image.ANTIALIAS)  # 调整二维码图像大小以适应标签尺寸
 image = image.crop((0, 0, image.width -10, image.height-10))
 dib = ImageWin.Dib (image)

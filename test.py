@@ -88,12 +88,15 @@ from lib.ScanCode import SC
 # re = response.content
 # print(re)
 
+#
+# import requests
+#
+# url = 'http://127.0.0.1:5000/api/update/test.db/test_table/4'
+# data = {'column_name': 'name', "data": 'up'}
+# headers = {'Content-Type': 'application/json'}
+# response = requests.post(url, json=data, headers=headers)
+# re = response.content
+# print(re)
 
-import requests
-
-url = 'http://127.0.0.1:5000/api/update/test.db/test_table/4'
-data = {'column_name': 'name', "data": 'up'}
-headers = {'Content-Type': 'application/json'}
-response = requests.post(url, json=data, headers=headers)
-re = response.content
-print(re)
+# import lib.Printer as Printer
+# Printer.printer("qrcode.png","test","name","type","ascription")
