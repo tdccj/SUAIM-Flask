@@ -15,10 +15,10 @@ def printer(qr_path, _id,_name,_type,_ascription):
     Ctime = time.strftime("%y/%m/%d %H:%M", time.localtime())
 
     DataList = [
-        [150, 14, _id, {'name': '宋体', 'height': 27}],
-        [150, 40, _name, {'name': '宋体', 'height': 27}],
-        [150, 70, _type, {'name': '宋体', 'height': 27}],
-        [150, 100, _ascription, {'name': '宋体', 'height': 27}],
+        [150, 14, str(_id), {'name': '宋体', 'height': 27}],
+        [150, 40, str(_name), {'name': '宋体', 'height': 27}],
+        [150, 70, str(_type), {'name': '宋体', 'height': 27}],
+        [150, 100, str(_ascription), {'name': '宋体', 'height': 27}],
 
 
     ]

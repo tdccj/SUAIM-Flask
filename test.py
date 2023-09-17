@@ -101,11 +101,21 @@ from lib.ScanCode import SC
 # import lib.Printer as Printer
 # Printer.printer("qrcode.png","test","name","type","ascription")
 
+# import requests
+#
+# url = 'http://127.0.0.1:5000/api/print_label'
+# data = {'qr_path': './qrcode.png', "_id": '1', "_name": '2', "_type": '3', "_ascription": '4'}
+# headers = {'Content-Type': 'application/json'}
+# response = requests.post(url, json=data, headers=headers)
+# re = response.content
+# print(re)
+
 import requests
 
-url = 'http://127.0.0.1:5000/api/print_label'
-data = {'qr_path': './qrcode.png', "_id": '1', "_name": '2', "_type": '3', "_ascription": '4'}
-headers = {'Content-Type': 'application/json'}
-response = requests.post(url, json=data, headers=headers)
-re = response.content
-print(re)
+url = 'http://127.0.0.1:5000/api/print_label/test.db/test_table/3'
+response = requests.get(url)
+if response.status_code == 200:
+    print('successfully')
+else:
+    print('Failed')
+print(response)

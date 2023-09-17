@@ -179,7 +179,35 @@ def update_item(db_path, db_table, db_id):
     return str(item)
 
 
-# 调用打印机打印标签
+# 简单快速调用打印机打印标签
+@app.route('/api/print_label/<string:db_path>/<string:db_table>/<int:db_id>', methods=['GET'])
+def print_label_simple(db_path, db_table, db_id):
+    # 创建qrcode
+    sc = SC(db_path, db_table)
+    sc.create_code(db_path, db_table, db_id)
+
+    # 读取并返回qrcode
+    qrcode_path = 'qrcode.png'
+    # 连接数据库列表并查询
+    db = DB(db_path)
+    db.connect_table(db_table)
+    row = db.get_item_data(db_id)
+
+    # 判断查询结果是否为空
+    if row is None:
+        return jsonify({'error': 'item not found'}), 404
+
+    # 处理数据
+    item_info = {'id': row[0], 'name': row[1], 'type': row[2], 'tag': row[3], 'quantity': row[4], 'price': row[5],
+                 'consumables': row[6], 'remark': row[7], 'ascription': row[8]}
+    print(item_info)
+
+    # 调用打印机打印标签
+    printer(qr_path=qrcode_path, _id=item_info['id'], _name=item_info['name'], _type=item_info['type'], _ascription=item_info['ascription'])
+    return "successfully"
+
+
+# 调用打印机打印标签（暂时弃用）
 @app.route('/api/print_label', methods=['POST'])
 def print_label():
     data = request.get_json()
