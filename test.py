@@ -110,12 +110,12 @@ from lib.ScanCode import SC
 # re = response.content
 # print(re)
 
-import requests
-
-url = 'http://127.0.0.1:5000/api/print_label/test.db/test_table/3'
-response = requests.get(url)
-if response.status_code == 200:
-    print('successfully')
-else:
-    print('Failed')
-print(response)
+# import requests
+#
+# url = 'http://127.0.0.1:5000/api/print_label/test.db/test_table/3'
+# response = requests.get(url)
+# if response.status_code == 200:
+#     print('successfully')
+# else:
+#     print('Failed')
+# print(response)
