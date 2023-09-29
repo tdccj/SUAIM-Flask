@@ -8,6 +8,7 @@ from lib.Database import DB
 class SC:
     def __init__(self, _db, _table):
         # 创建数据库实例
+        print(_db, _table)
         self._db = DB(_db)  # 连接数据库
         self._db.connect_table(_table)  # 连接表
 
@@ -16,6 +17,8 @@ class SC:
     # 创建二维码
     def create_code(self, db, table, id_db):
         import qrcode
+
+        print(self._db.get_item_data(id_db),121)
         text = f"SUAIM/{db}/{table}" + str(self._db.get_item_data(id_db)[:-2] + (self._db.get_item_data(id_db)[-1],))
 
         # 创建实例
@@ -30,7 +33,7 @@ class SC:
 
         # 保存qrcode
         self._img = qr.make_image()
-        with open("../qrcode.png", "wb") as q:
+        with open("qrcode.png", "wb") as q:
             self._img.save(q)
 
     # 创建打印标签

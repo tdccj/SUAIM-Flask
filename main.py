@@ -2,7 +2,7 @@
 from lib.Database import DB
 from flask import Flask, jsonify, request, send_file
 from gevent import pywsgi
-from lib.ScanCode import SC
+from ScanCode import SC
 from lib.Printer import printer
 
 app = Flask(__name__)
@@ -43,6 +43,7 @@ def get_table_all(db_path):
 def get_qrcode(db_path, db_table, db_id):
     # 创建qrcode
     sc = SC(db_path, db_table)
+    print(db_path, db_table, db_id)
     sc.create_code(db_path, db_table, db_id)
 
     # 读取并返回qrcode
@@ -114,8 +115,8 @@ def create_item(db_path, db_table):
         remark = None
 
     # create item
-    db.create_item(name, item_type, quantity, ascription, tag, price, consumables, remark)
-    return jsonify({'result': 'success'}), 200
+    row_id = db.create_item(name, item_type, quantity, ascription, tag, price, consumables, remark)
+    return jsonify({'result': 'success', "id": row_id}), 200
 
 
 # 删除表
@@ -203,7 +204,8 @@ def print_label_simple(db_path, db_table, db_id):
     print(item_info)
 
     # 调用打印机打印标签
-    printer(qr_path=qrcode_path, _id=item_info['id'], _name=item_info['name'], _type=item_info['type'], _ascription=item_info['ascription'])
+    printer(qr_path=qrcode_path, _id=item_info['id'], _name=item_info['name'], _type=item_info['type'],
+            _ascription=item_info['ascription'])
     return "successfully"
 
 

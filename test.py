@@ -1,7 +1,6 @@
 # coding = utf-8
 
-from lib.Database import DB
-from lib.ScanCode import SC
+from ScanCode import SC
 
 # dBName = "test.db"
 # dBTable = "test_table"
@@ -119,3 +118,9 @@ from lib.ScanCode import SC
 # else:
 #     print('Failed')
 # print(response)
+
+
+db = "test.db"
+tb = "Tracked_Vehicle_Database3"
+sc = SC(db, tb)
+sc.create_code(db, tb, 17)

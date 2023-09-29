@@ -31,7 +31,7 @@ for row in sheet.values:
             print('User created successfully')
         else:
             print('Failed to create item')
-        row_id = response.json()
+        row_id = response.json()["id"][0]
         print(row_id)
 
         # 打印
