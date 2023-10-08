@@ -120,7 +120,34 @@ from ScanCode import SC
 # print(response)
 
 
-db = "test.db"
-tb = "Tracked_Vehicle_Database3"
-sc = SC(db, tb)
-sc.create_code(db, tb, 17)
+# db = "test.db"
+# tb = "Tracked_Vehicle_Database3"
+# sc = SC(db, tb)
+# sc.create_code(db, tb, 17)
+
+# coding = utf-8
+import openpyxl
+import requests
+from urllib.parse import quote
+
+xlsx_file = input("Enter the name of the file: ")
+db = "SAIUM_TDhome.db"  # 数据库名称
+tb = "Tracked_Vehicle_Database"    # 表名称
+
+# open the file
+wb = openpyxl.load_workbook(xlsx_file)
+sheet = wb.active
+
+# get the values and create it  em
+for row in sheet.values:
+    print(row[1])
+
+
+# # Check table
+# url = f"http://127.0.0.1:5000/api/connect/{db}/{tb}"
+# response = requests.get(url)
+# if response.status_code == 200:
+#     print('connect_successfully')
+# else:
+#     print('connect_Failed')
+# print(response.text)
