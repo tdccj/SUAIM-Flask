@@ -22,8 +22,8 @@ Small-Scale Universal Asset/Inventory Management 泛用小型资产/库存管理
 > 初期尽量采用现成框架，实现基础框架，具备开源、较轻量级、自托管、手机扫码出入库管理等特性
 > 逐步实现高拓展性、多平台终端、现代化ui、docker部署
 > 尽量缩短出入库流程，降低重复操作
-> 服务端采用Python+Flaks+SQLite数据库
-> 客户端采用Dart+Flutter多端开发
+> 后端采用Python+Flaks+SQLite数据库
+> 前端采用Dart+Flutter多端开发
 > 备选Django框架+h5开发
 
 
@@ -34,12 +34,21 @@ Small-Scale Universal Asset/Inventory Management 泛用小型资产/库存管理
 - 逻辑开发
 - 调用开源ocr和识别码生成库
 
+## 框架
+- 服务端
+   - 客户端后端（待定）
+   - 服务器后端（可选）
+      - python——flask
+- 客户端
+   - windows客户端
+      - flutter
+   - 安卓客户端
+      - flutter
+
 ## 注意事项
 > Database、table名字务必用英文，否则可能会出现问题<br>
 > 数据库最好放在程序目录下（源目录）<br>
-> 23.6.22修改了路由接口，以前的关于main的test需要修改链接才能使用<br>
-> 传参的时候切记将空格替换为_否则可能无法被get请求<br>
-> 由于路径问题，ScanCode暂时只能放在根目录<br>
+> 23.6.22修改了路由接口，以前的关于main的test需要修改链接才能使用
 ## 另
 > 因为技术有限，开发缓慢，目标难以定期定量完成，如果你也需要这么一款开源自托管管理系统，欢迎加入开发
 
