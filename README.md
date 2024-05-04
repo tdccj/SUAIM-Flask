@@ -2,6 +2,10 @@
 Small-Scale Universal Asset/Inventory Management 泛用小型资产/库存管理系统<br>
 [SUAIM-Flutter客户端](https://github.com/tdccj/SUAIM-Flutter)
 
+> 旧的旅途尚未结束，新的征程已经开始。  
+> 这次 SUAIM 将引入 Vue3 作为前端开发框架，并对 Flask 后端进行一定程度的重构。  
+> （原 Flutter 客户端将暂时搁置）
+
 ## 背景
 > 现有的大型资产/库存管理系统多为ERP/WMS系统的子模块，而小型（应用于个人/小团队）的资产/库存管理系统多为操作重复且封闭的各种小程序
 
@@ -40,10 +44,12 @@ Small-Scale Universal Asset/Inventory Management 泛用小型资产/库存管理
    - 服务器后端（可选）
       - python——flask
 - 客户端
-   - windows客户端
-      - flutter
-   - 安卓客户端
-      - flutter
+  - Web 客户端
+    - vue3
+  - Windows 客户端
+     - flutter
+  - 安卓客户端
+     - flutter
 
 ## 注意事项
 > Database、table名字务必用英文，否则可能会出现问题<br>
