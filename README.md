@@ -1,6 +1,6 @@
 # SUAIM溯物-Flask服务端
 Small-Scale Universal Asset/Inventory Management 泛用小型资产/库存管理系统<br>
-[SUAIM-Flutter客户端](https://github.com/tdccj/SUAIM-Flutter)
+~~[SUAIM-Flutter客户端](https://github.com/tdccj/SUAIM-Flutter)~~
 
 > 旧的旅途尚未结束，新的征程已经开始。  
 > 这次 SUAIM 将引入 Vue3 作为前端开发框架，并对 Flask 后端进行一定程度的重构。  
