@@ -13,7 +13,7 @@
 - {"database": db_path}
 
 ### 1.2 获取所有表
-`GET /api/get/{db_path}/table_all`  
+`GET /api/get/{db_path}`  
 获取数据库中所有表的列表。
 
 **参数**  
