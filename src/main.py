@@ -3,7 +3,7 @@ from src.Database import DB
 from flask import Flask
 from gevent import pywsgi
 
-from flask_cors import CORS  # 解决跨域访问问题
+from flask_cors import CORS
 
 from routes.api import api_bp
 from routes.api_database import db_bp
@@ -13,6 +13,9 @@ from routes.api_qrcore import qr_bp
 
 
 app = Flask(__name__)
+
+cors = CORS(app)    # 解决跨域访问问题
+
 
 # 注册蓝图（从模块导入路由）
 app.register_blueprint(api_bp)
