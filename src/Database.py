@@ -8,7 +8,7 @@ tableName = ""
 
 class DB:
     def __init__(self, path):
-        self.path = path
+        self.path = "../database/"+path
 
         self.conn = sqlite3.connect(self.path)  # 连接数据库
         print("数据库连接成功")
