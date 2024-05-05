@@ -9,7 +9,7 @@ db_bp = Blueprint('api_database', __name__)
 def connect_database(db_path):
     # 连接或创建数据库
     DB(db_path)
-    return jsonify(db_path)
+    return jsonify({"database": db_path})
 
 
 @db_bp.route('/api/get/<string:db_path>/table_all', methods=['GET'])

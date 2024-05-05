@@ -10,7 +10,7 @@
 - db_path: 数据库的路径
 
 **返回**  
-- db_path: 返回连接或创建的数据库路径
+- {"database": db_path}
 
 ### 1.2 获取所有表
 `GET /api/get/{db_path}/table_all`  
