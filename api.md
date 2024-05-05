@@ -20,7 +20,7 @@
 - db_path: 数据库的路径
 
 **返回**  
-- `jsonify({'result': 'success', "tables": db.get_table_all(), 'def': 'get_table_all'}`
+- `{'result': 'success', "tables": db.get_table_all(), 'def': 'get_table_all'}`
 
 ## 2. 表（Table）
 
