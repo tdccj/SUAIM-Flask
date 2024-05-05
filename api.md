@@ -96,7 +96,7 @@
 - ascription: 归属  
 - tag (可选): 标签  
 - price (可选): 价格  
-- consumables (可选): 消耗品  
+- consumables (可选): 是否为消耗品  
 - remark (可选): 备注
 
 **返回**  
