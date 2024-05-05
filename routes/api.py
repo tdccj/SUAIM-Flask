@@ -3,10 +3,10 @@
 from flask import Blueprint
 from markdown import markdown
 
-index_bp = Blueprint('index_bp', __name__)
+api_bp = Blueprint('api_bp', __name__)
 
 
-@index_bp.route('/api')
+@api_bp.route('/api')
 def index():
     # 在首页显示 api 文档
 
