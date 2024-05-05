@@ -16,4 +16,4 @@ def connect_database(db_path):
 def get_table_all(db_path):
     # 获取数据库中的所有列表
     db = DB(db_path)
-    return db.get_table_all()
+    return jsonify(db.get_table_all())
