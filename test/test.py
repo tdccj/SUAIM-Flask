@@ -1,7 +1,5 @@
 # coding = utf-8
 
-from ScanCode import SC
-
 # dBName = "test.db"
 # dBTable = "test_table"
 #
@@ -97,7 +95,7 @@ from ScanCode import SC
 # re = response.content
 # print(re)
 
-# import lib.Printer as Printer
+# import src.Printer as Printer
 # Printer.printer("qrcode.png","test","name","type","ascription")
 
 # import requests
@@ -127,8 +125,6 @@ from ScanCode import SC
 
 # coding = utf-8
 import openpyxl
-import requests
-from urllib.parse import quote
 
 xlsx_file = input("Enter the name of the file: ")
 db = "SAIUM_TDhome.db"  # 数据库名称

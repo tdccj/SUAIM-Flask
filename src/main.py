@@ -1,11 +1,14 @@
 # coding = utf-8
-from lib.Database import DB
+from src.Database import DB
 from flask import Flask, jsonify, request, send_file
 from gevent import pywsgi
 from ScanCode import SC
-from lib.Printer import printer
+from src.Printer import printer
+from routes.index import index_bp
 
 app = Flask(__name__)
+
+app.register_blueprint(index_bp)
 
 # 将默认url字符集改成utf-8，以接收中文
 app.url_map.charset = 'utf-8'
@@ -47,7 +50,7 @@ def get_qrcode(db_path, db_table, db_id):
     sc.create_code(db_path, db_table, db_id)
 
     # 读取并返回qrcode
-    qrcode_path = 'qrcode.png'
+    qrcode_path = '../qrcode.png'
     return send_file(qrcode_path, mimetype='image/jpeg')
 
 
@@ -64,7 +67,7 @@ def create_print_label(db_path, db_table, db_id):
     sc.create_print_label(text)
 
     # 读取并返回print_label
-    label_path = 'print_label.png'
+    label_path = '../print_label.png'
     return send_file(label_path, mimetype='image/jpeg')
 
 
@@ -188,7 +191,7 @@ def print_label_simple(db_path, db_table, db_id):
     sc.create_code(db_path, db_table, db_id)
 
     # 读取并返回qrcode
-    qrcode_path = 'qrcode.png'
+    qrcode_path = '../qrcode.png'
     # 连接数据库列表并查询
     db = DB(db_path)
     db.connect_table(db_table)

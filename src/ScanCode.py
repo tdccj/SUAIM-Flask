@@ -1,5 +1,5 @@
 # coding = utf-8
-from lib.Database import DB
+from src.Database import DB
 
 
 # 这个库用于生成和扫描二维码
@@ -33,14 +33,14 @@ class SC:
 
         # 保存qrcode
         self._img = qr.make_image()
-        with open("qrcode.png", "wb") as q:
+        with open("../qrcode.png", "wb") as q:
             self._img.save(q)
 
     # 创建打印标签
     # 暂时仅限40*30
     def create_print_label(self, text: str):
         from PIL import Image, ImageFont, ImageDraw
-        with open("label_template/label_template_40mm×30mm.png", "rb") as _img:
+        with open("../label_template/label_template_40mm×30mm.png", "rb") as _img:
             # 加载字体
             font = ImageFont.truetype(font='font/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.ttf', size=30)
 
