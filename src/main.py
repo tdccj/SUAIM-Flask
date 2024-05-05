@@ -2,6 +2,7 @@
 from src.Database import DB
 from flask import Flask
 from gevent import pywsgi
+
 from routes.api import api_bp
 from routes.api_database import db_bp
 from routes.api_table import tb_bp
