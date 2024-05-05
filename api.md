@@ -33,7 +33,7 @@
 - db_table: 表的名称
 
 **返回**  
-- 表中所有数据的列表
+- `{'table': db_path/db_table'}`
 
 ### 2.2 删除表
 `DELETE /api/delete/{db_path}/{db_table}`  
@@ -56,6 +56,18 @@
 
 **返回**  
 - 重命名结果
+
+### 2.4 获取表中的所有 item
+`GET /api/get/{db_path}/{db_table}`  
+连接到一个已存在的表，或者创建一个新的表。
+
+**参数**  
+- db_path: 数据库的路径  
+- db_table: 表的名称
+
+**返回**  
+- `({"columns": columns,
+                    "data": all_data})`
 
 ## 3. 物品（Item）
 

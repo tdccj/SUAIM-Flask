@@ -11,14 +11,25 @@ def connect_table(db_path, db_table):
     # 连接或创建表单，并返回内容
     db = DB(db_path)
     db.connect_table(db_table)
+
+    return jsonify({'table': f'{db_path}/{db_table}'})
+
+
+@tb_bp.route('/api/get/<string:db_path>/<string:db_table>', methods=['GET'])
+def get_all_item(db_path, db_table):
+    # 连接表单，返回所有item
+    db = DB(db_path)
+    db.connect_table(db_table)
     all_data = db.get_item_all()
+    columns = db.get_normal_columns()
 
     # 判断查询结果是否为空
     if all_data is None:
         return jsonify({'error': 'data not found in this table'}), 404
     # print(all_data)
 
-    return jsonify(all_data)
+    return jsonify({"columns": columns,
+                    "data": all_data})
 
 
 @tb_bp.route('/api/delete/<string:db_path>/<string:db_table>', methods=['DELETE'])
@@ -41,9 +52,6 @@ def rename_table(db_path):
     re = db.rename_table(old_name, new_name)
 
     return str(re)
-
-
-
 
 # @app.route('/api/<string:db_path>/<string:db_table>/name', methods=['GET'])
 # def get_all_name(db_path, db_table):

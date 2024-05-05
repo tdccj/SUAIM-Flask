@@ -8,11 +8,16 @@ tableName = ""
 
 class DB:
     def __init__(self, path):
-        self.path = "../database/"+path
+        self.path = "../database/" + path
 
         self.conn = sqlite3.connect(self.path)  # 连接数据库
         print("数据库连接成功")
         self.cursor = self.conn.cursor()  # 创建游标
+
+        self.columns = ["id", "name", "type", "tag", "quantity", "price", "consumables", "remark", "ascription"]
+
+    def get_normal_columns(self):
+        return self.columns
 
     # 连接列表
     def connect_table(self, table_name):
@@ -100,7 +105,7 @@ class DB:
             self.cursor.execute(f"ALTER TABLE {old_name} RENAME TO {new_name}")
             return "successfully"
         except sqlite3.OperationalError as EX:
-            print("error:",EX)
+            print("error:", EX)
             return EX
 
     # 查看所有表
