@@ -103,7 +103,7 @@ class DB:
     def rename_table(self, old_name, new_name):
         try:
             self.cursor.execute(f"ALTER TABLE {old_name} RENAME TO {new_name}")
-            return "successfully"
+            return "success"
         except sqlite3.OperationalError as EX:
             print("error:", EX)
             return EX

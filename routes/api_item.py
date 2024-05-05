@@ -2,7 +2,6 @@
 from flask import Blueprint, request, jsonify
 from src.Database import DB
 
-
 item_bp = Blueprint('api_item', __name__)
 
 
@@ -24,7 +23,7 @@ def get_item_data(db_path, db_table, item_id):
                  'consumables': row[6], 'remark': row[7], 'ascription': row[8]}
 
     # 返回响应
-    return jsonify(item_info)
+    return jsonify({'result': 'success', "data": item_info, 'def': 'get_item_data'}), 200
 
 
 @item_bp.route('/api/create/<string:db_path>/<string:db_table>/item', methods=['POST'])
@@ -54,16 +53,16 @@ def create_item(db_path, db_table):
 
     # create item
     row_id = db.create_item(name, item_type, quantity, ascription, tag, price, consumables, remark)
-    return jsonify({'result': 'success', "id": row_id}), 200
+    return jsonify({'result': 'success', "id": row_id, 'def': 'create_item'}), 200
 
 
 @item_bp.route('/api/delete/<string:db_path>/<string:db_table>/<int:db_id>', methods=['DELETE'])
-def delete_item(db_path, db_table, db_id):
+def delete_item(db_path, db_table, row_id):
     # 删除物品
     db = DB(db_path)
     db.connect_table(db_table)
-    db.delete_item(db_id)
-    return "successfully"
+    db.delete_item(row_id)
+    return jsonify({'result': 'success', "id": row_id, 'def': 'delete_item'}), 200
 
 
 @item_bp.route('/api/update/<string:db_path>/<string:db_table>/<int:db_id>', methods=['POST'])
@@ -94,4 +93,4 @@ def update_item(db_path, db_table, db_id):
     # 获取更新后的项数据
     item = db.get_item_data(db_id)
 
-    return str(item)
+    return jsonify({'result': 'success', "item": str(item), 'def': 'update_item'}), 200
