@@ -18,3 +18,6 @@
 - 完成 DBX delete_table
 - 修改 DBX create_table 返回内容的语法和警告机制
 - 将第一个日志文件加上了.log后缀，但是后续文件会出现两个log后缀
+#### `v0.1.1-3`
+- 创建 DBX rename_table
+- 修正 log 中的字符串显示

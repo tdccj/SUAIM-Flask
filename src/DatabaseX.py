@@ -58,30 +58,44 @@ class DBX:
 
             self.conn.commit()  # 提交
 
-            self.log.debug(f"Create to table {table_name} successfully")
+            self.log.debug(f"Create to table '{table_name}' successfully")
 
-            return {"status": "success", "message": f"Create table {table_name} successfully"}
+            return {"status": "success", "message": f"Create table '{table_name}' successfully"}
 
         except sqlite3.OperationalError as ex:
             if "already exists" in str(ex):
-                self.log.info(f"Create table {table_name} failed , Because {ex}")
-                return {"status": "failed", "message": f"Table {table_name} is already exists"}
+                self.log.info(f"Create table '{table_name}' failed , Because '{ex}'")
+                return {"status": "failed", "message": f"Table '{table_name}' is already exists"}
             else:
-                self.log.warning(f"Create table {table_name} failed , Because {ex}")
+                self.log.warning(f"Create table '{table_name}' failed , Because '{ex}'")
                 return {"status": "failed", "message": f"Create table {table_name} failed"}
 
     def delete_table(self, table_name):
         # 删除表
         try:
             self.cursor.execute(f"DROP TABLE '{table_name}';")
-            self.log.debug(f"Delete table {table_name} successfully")
-            return {"status": "success", "message": f"Delete table {table_name} successfully"}
+            self.log.debug(f"Delete table '{table_name}' successfully")
+            return {"status": "success", "message": f"Delete table '{table_name}' successfully"}
 
         except sqlite3.OperationalError as e:
             if "no such table" in str(e):
-                self.log.info(f"Delete table {table_name} failed , Because {e}")
-                return {"status": "failed", "message": f"Table {table_name} is not exists"}
+                self.log.info(f"Delete table '{table_name}' failed , Because '{e}'")
+                return {"status": "failed", "message": f"Table '{table_name}' is not exists"}
             else:
-                self.log.warning(f"Delete table {table_name} failed , Because {e}")
-                return {"status": "failed", "message": f"Create table {table_name} failed"}
+                self.log.warning(f"Delete table '{table_name}' failed , Because '{e}'")
+                return {"status": "failed", "message": f"Create table '{table_name}' failed"}
 
+    def rename_table(self, old_name, new_name):
+        # 修改表名
+        try:
+            self.cursor.execute(f"ALTER TABLE '{old_name}' RENAME TO '{new_name}'")
+            self.log.debug(f"Rename table '{old_name}' to '{new_name}' successfully")
+            return {"status": "success", "message": f"Rename table '{old_name}' to '{new_name}' successfully"}
+
+        except sqlite3.OperationalError as e:
+            if "no such table" in str(e):
+                self.log.info(f"Rename table '{old_name}' to '{new_name}' failed , Because '{e}'")
+                return {"status": "failed", "message": f"Table '{old_name}' is not exists"}
+            else:
+                self.log.warning(f"Rename table '{old_name}' to '{new_name}' failed , Because '{e}'")
+                return {"status": "failed", "message": f"Rename table '{old_name}' to '{new_name}' failed"}
