@@ -10,7 +10,7 @@
 - db_path: 数据库的路径
 
 **返回**  
-- `{'result': 'success', "database": db_path, 'def': 'connect_database'}`
+- `{'status': 'success', "database": db_path, 'def': 'connect_database'}`
 
 ### 1.2 获取所有表
 `GET /api/get/{db_path}`  
@@ -20,12 +20,12 @@
 - db_path: 数据库的路径
 
 **返回**  
-- `{'result': 'success', "tables": db.get_table_all(), 'def': 'get_table_all'}`
+- `{'status': 'success', "tables": db.get_table_all(), 'def': 'get_table_all'}`
 
 ## 2. 表（Table）
 
 ### 2.1 连接或创建表
-`GET /api/connect/{db_path}/{db_table}`  
+`GET /api/create/{db_path}/{db_table}`  
 连接到一个已存在的表，或者创建一个新的表。
 
 **参数**  
@@ -33,7 +33,7 @@
 - db_table: 表的名称
 
 **返回**  
-- `{'result': "success", 'table': f'{db_path}/{db_table}', 'def': 'connect_table'}`
+- `{'status': "success", 'table': f'{db_path}/{db_table}', 'def': 'connect_table'}`
 
 ### 2.2 删除表
 `DELETE /api/delete/{db_path}/{db_table}`  
@@ -44,7 +44,7 @@
 - db_table: 表的名称
 
 **返回**  
-- `{'result': "success", 'def': 'delete_table'}`
+- `{'status': "success", 'def': 'delete_table'}`
 
 ### 2.3 重命名表
 `POST /api/rename/{db_path}/table`  
@@ -55,7 +55,7 @@
 - new_name: 新表名
 
 **返回**  
-- `{'result': str(re), 'def': 'rename_table'}`
+- `{'status': str(re), 'def': 'rename_table'}`
 
 ### 2.4 获取表中的所有 item
 `GET /api/get/{db_path}/{db_table}`  
@@ -66,7 +66,7 @@
 - db_table: 表的名称
 
 **返回**  
-- `{'result': "success", "columns": columns,
+- `{'status': "success", "columns": columns,
     "data": all_data, 'def': 'get_all_item'}`
 
 ## 3. 物品（Item）
@@ -81,7 +81,7 @@
 - item_id: 物品的ID
 
 **返回**  
-- `{'result': 'success', "data": item_info, 'def': 'get_item_data'}`
+- `{'status': 'success', "data": item_info, 'def': 'get_item_data'}`
 
 ### 3.2 创建新物品
 `POST /api/create/{db_path}/{db_table}/item`  
@@ -100,7 +100,7 @@
 - remark (可选): 备注
 
 **返回**  
-- `{'result': 'success', "id": row_id, 'def': 'create_item'}`
+- `{'status': 'success', "id": row_id, 'def': 'create_item'}`
 
 ### 3.3 删除物品
 `DELETE /api/delete/{db_path}/{db_table}/{db_id}`  
@@ -112,7 +112,7 @@
 - db_id: 物品的ID
 
 **返回**  
-- `{'result': 'success', "id": row_id, 'def': 'delete_item'}`
+- `{'status': 'success', "id": row_id, 'def': 'delete_item'}`
 
 ### 3.4 修改物品
 `POST /api/update/{db_path}/{db_table}/{db_id}`  
@@ -126,7 +126,7 @@
 - data: 更新的数据
 
 **返回**  
-- `{'result': 'success', "item": str(item), 'def': 'update_item'}`
+- `{'status': 'success', "item": str(item), 'def': 'update_item'}`
 
 ## 4. 二维码（QRCode）
 
@@ -171,4 +171,4 @@
 - db_id: 物品的ID
 
 **返回**  
-- `{'result': 'success', 'def': 'print_label_simple'}`
+- `{'status': 'success', 'def': 'print_label_simple'}`

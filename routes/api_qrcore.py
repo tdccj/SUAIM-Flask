@@ -58,7 +58,7 @@ def print_label_simple(db_path, db_table, db_id):
 
     # 判断查询结果是否为空
     if row is None:
-        return jsonify({'result': 'error', 'error': 'item not found', 'def': 'print_label_simple'}), 404
+        return jsonify({'status': 'error', 'error': 'item not found', 'def': 'print_label_simple'}), 404
 
     # 处理数据
     item_info = {'id': row[0], 'name': row[1], 'type': row[2], 'tag': row[3], 'quantity': row[4], 'price': row[5],
@@ -68,7 +68,7 @@ def print_label_simple(db_path, db_table, db_id):
     # 调用打印机打印标签
     printer(qr_path=qrcode_path, _id=item_info['id'], _name=item_info['name'], _type=item_info['type'],
             _ascription=item_info['ascription'])
-    return jsonify({'result': 'success', 'def': 'print_label_simple'}), 200
+    return jsonify({'status': 'success', 'def': 'print_label_simple'}), 200
 
 # @app.route('/api/print_label', methods=['POST'])
 # def print_label():
