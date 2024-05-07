@@ -43,6 +43,8 @@ def create_print_label(db_path, db_table, db_id):
 
 @qr_bp.route('/api/print_label/<string:db_path>/<string:db_table>/<int:db_id>', methods=['GET'])
 def print_label_simple(db_path, db_table, db_id):
+    warnings.warn("此方法已废弃，很快将被删除，不推荐使用", DeprecationWarning)
+
     # 简单快速调用打印机打印标签
 
     # 创建qrcode
