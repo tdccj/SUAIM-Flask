@@ -2,12 +2,15 @@
 
 # 这个库用来操作sqlite3数据库
 import sqlite3
+import warnings
 
 tableName = ""
 
 
 class DB:
     def __init__(self, path):
+        warnings.warn("此方法已废弃，不推荐使用，等待重构为DatabaseX", DeprecationWarning)
+
         self.path = "../database/" + path
 
         self.conn = sqlite3.connect(self.path)  # 连接数据库
