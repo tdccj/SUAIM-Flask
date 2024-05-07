@@ -60,12 +60,28 @@ class DBX:
 
             self.log.debug(f"Create to table {table_name} successfully")
 
-            return {"status": "success", "message": f"Create to table {table_name} successfully"}
+            return {"status": "success", "message": f"Create table {table_name} successfully"}
 
         except sqlite3.OperationalError as ex:
-            self.log.debug(f"Create to table {table_name} failed , Because {ex}")
             if "already exists" in str(ex):
+                self.log.info(f"Create table {table_name} failed , Because {ex}")
                 return {"status": "failed", "message": f"Table {table_name} is already exists"}
             else:
-                return {"status": "failed", "message": f"Create to table {table_name} failed"}
+                self.log.warning(f"Create table {table_name} failed , Because {ex}")
+                return {"status": "failed", "message": f"Create table {table_name} failed"}
+
+    def delete_table(self, table_name):
+        # 删除表
+        try:
+            self.cursor.execute(f"DROP TABLE '{table_name}';")
+            self.log.debug(f"Delete table {table_name} successfully")
+            return {"status": "success", "message": f"Delete table {table_name} successfully"}
+
+        except sqlite3.OperationalError as e:
+            if "no such table" in str(e):
+                self.log.info(f"Delete table {table_name} failed , Because {e}")
+                return {"status": "failed", "message": f"Table {table_name} is not exists"}
+            else:
+                self.log.warning(f"Delete table {table_name} failed , Because {e}")
+                return {"status": "failed", "message": f"Create table {table_name} failed"}
 

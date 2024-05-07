@@ -12,3 +12,9 @@
 #### `v0.1.1-1`
 - 添加开发日志
 - 逐步替换 api_database 中的 DB 类为 DBX
+- 完成 DBX create_table
+#### `v0.1.1-2`
+- 考虑将 item 的删除改为标记删除和实质删除两种
+- 完成 DBX delete_table
+- 修改 DBX create_table 返回内容的语法和警告机制
+- 将第一个日志文件加上了.log后缀，但是后续文件会出现两个log后缀

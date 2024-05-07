@@ -21,7 +21,7 @@ def create_table(db_path, db_table):
 def delete_table(db_path, db_table):
     # 删除表
     # print(db_path, db_table)
-    db = DB(db_path)
+    db = DBX(db_path)
     db.delete_table(db_table)
     return jsonify({'status': "success", 'def': 'delete_table'}), 200
 
