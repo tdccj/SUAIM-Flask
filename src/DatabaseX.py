@@ -68,3 +68,4 @@ class DBX:
                 return {"status": "failed", "message": f"Table {table_name} is already exists"}
             else:
                 return {"status": "failed", "message": f"Create to table {table_name} failed"}
+

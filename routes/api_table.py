@@ -14,7 +14,7 @@ def create_table(db_path, db_table):
     info = db.create_table(db_table)
 
     return jsonify({'status': info["status"], "message": info["message"], 'table': f'{db_path}/{db_table}',
-                    'def': 'connect_table'}), 200
+                    'def': 'create_table'}), 200
 
 
 @tb_bp.route('/api/delete/<string:db_path>/<string:db_table>', methods=['DELETE'])

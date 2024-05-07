@@ -33,7 +33,7 @@
 - db_table: 表的名称
 
 **返回**  
-- `{'status': "success", 'table': f'{db_path}/{db_table}', 'def': 'connect_table'}`
+- `{'status': status, "message": message, 'table': f'{db_path}/{db_table}', 'def': 'connect_table'}`
 
 ### 2.2 删除表
 `DELETE /api/delete/{db_path}/{db_table}`  
