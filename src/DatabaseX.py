@@ -1,16 +1,18 @@
 # coding = utf-8
+import sqlite3
 
 #   ——————————————————————————————————————————————————————————
 #     DatabaseX 将重构并解决 Database 的低可靠性问题，将提供 容错、验证、
 #   备份、恢复、日志记录等功能。
 #   ——————————————————————————————————————————————————————————
 
-import sqlite3
+from src.DBX.Table import Table
+from src.Execute import Execute
 from src.Logger import logger
-from src.Execute import Execute, Ignore, IgnoreList
 
 
-class DBX:
+class DBX(Table):
+    # DBX 现在使用多继承实现模块化开发
     def __init__(self, path):
         self.log = logger("DatabaseX")  # 创建日志记录
 
@@ -26,65 +28,7 @@ class DBX:
 
         self.Execute = Execute(self.conn, self.log)
 
-    def get_normal_columns(self):
-        # 获取默认列名
-        return self.columns
+        # 将 init 后的静态对象传给父类，避免重复初始化
+        Table.__init__(self, self.columns, self.Execute)
 
-    def create_table(self, table_name):
-        # 创建表单
-
-        #   ________________________________________
-        #   name        INTEGER 名称
-        #   type        TEXT    类型
-        #   tag         TEXT    标签
-        #   quantity    REAL    数量
-        #   price       REAL    价值
-        #   consumables TEXT    是否为消耗品(消耗品周期)
-        #   remark      TEXT    备注
-        #   ascription  TEXT    归属人
-        #   ________________________________________
-
-        query = f'''CREATE TABLE "{table_name}" (
-             id          INTEGER PRIMARY KEY AUTOINCREMENT,
-             name        TEXT    NOT NULL,
-             type        TEXT    NOT NULL,
-             tag         TEXT,
-             quantity    REAL    NOT NULL,
-             price       REAL,
-             consumables TEXT,
-             remark      TEXT,
-             ascription  TEXT    NOT NULL
-        
-        
-             );'''
-
-        handle = f"Create table '{table_name}'"
-
-        # 将 重复创建 等 不重要的报错 归为 info，将其他报错 设为 warning 以便排错
-        il = IgnoreList(Ignore("already exists", f"Create table '{table_name}'", f"Table '{table_name}' is already "
-                                                                                 f"exists"))
-
-        return self.Execute.execute(query, handle, ignores=il)
-
-    def delete_table(self, table_name):
-        # 删除表
-
-        query = f"DROP TABLE '{table_name}';"
-
-        handle = f"Delete table '{table_name}'"
-
-        il = IgnoreList(Ignore("no such table", f"Delete table '{table_name}'", f"Table '{table_name}' is not exists"))
-
-        return self.Execute.execute(query, handle, ignores=il)
-
-    def rename_table(self, old_name, new_name):
-        # 修改表名
-
-        query = f"ALTER TABLE '{old_name}' RENAME TO '{new_name}'"
-
-        handle = f"Rename table '{old_name}' to '{new_name}'"
-
-        il = IgnoreList(Ignore("no such table", f"Rename table '{old_name}' to '{new_name}'", f"Table '{old_name}' is "
-                                                                                              f"not exists"))
-        return self.Execute.execute(query, handle, ignores=il)
-
+    pass

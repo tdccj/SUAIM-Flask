@@ -45,3 +45,6 @@
 - 删除 api_table 中的弃用方法的代码，包括 get_all_name 和 get_all_data
 - DBX 中的表级操作已基本重构完成，api_table 适配业已基本完成
 - 下个版本将开始在 DBX 中重构 api_item 使用的 项级操作
+#### `v0.1.1-10`
+- DBX 将使用多继承模块化开发，和 api 对应，但仍然只有一个主类
+- 已将 Table 从 DBX 中剥离为父类模块之一，DBX 功能性和接口均不变
