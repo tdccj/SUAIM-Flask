@@ -28,3 +28,8 @@
 #### `v0.1.1-5`
 - Execute 基本完成
 - DBX create_table 成功应用 Execute
+#### `v0.1.1-6`
+- 将 DBX 中的 Execute 引用移动到 init 中
+- 去除 Execute 中多余的引号
+- 删除 DBX create_table 的旧代码
+- DBX delete_table 成功应用 Execute

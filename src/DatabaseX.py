@@ -24,6 +24,8 @@ class DBX:
 
         self.columns = ["id", "name", "type", "tag", "quantity", "price", "consumables", "remark", "ascription"]
 
+        self.Execute = Execute(self.conn, self.log)
+
     def get_normal_columns(self):
         # 获取默认列名
         return self.columns
@@ -58,56 +60,36 @@ class DBX:
 
         handle = f"Create table '{table_name}'"
 
-        # 将重复创建等不重要的报错其归为 info，其他报错为 warning 以便排错
+        # 将 重复创建 等 不重要的报错 归为 info，将其他报错 设为 warning 以便排错
         il = IgnoreList(Ignore("already exists", f"Create table '{table_name}'", f"Table '{table_name}' is already "
                                                                                  f"exists"))
 
-        return Execute(self.conn, self.log).execute(query, handle, ignores=il)
-
-        # 下面是旧代码，仅作示例
-        # try:
-        #     self.cursor.execute(f'''CREATE TABLE "{table_name}" (
-        #     id          INTEGER PRIMARY KEY AUTOINCREMENT,
-        #     name        TEXT    NOT NULL,
-        #     type        TEXT    NOT NULL,
-        #     tag         TEXT,
-        #     quantity    REAL    NOT NULL,
-        #     price       REAL,
-        #     consumables TEXT,
-        #     remark      TEXT,
-        #     ascription  TEXT    NOT NULL
-        #
-        #
-        #     );''')
-        #
-        #     self.conn.commit()  # 提交
-        #
-        #     self.log.debug(f"Create table '{table_name}' successfully")
-        #
-        #     return {"status": "success", "message": f"Create table '{table_name}' successfully"}
-        #
-        # except sqlite3.OperationalError as ex:
-        #     if "already exists" in str(ex):
-        #         self.log.info(f"Create table '{table_name}' failed , Because '{ex}'")
-        #         return {"status": "failed", "message": f"Table '{table_name}' is already exists"}
-        #     else:
-        #         self.log.warning(f"Create table '{table_name}' failed , Because '{ex}'")
-        #         return {"status": "failed", "message": f"Create table {table_name} failed"}
+        return self.Execute.execute(query, handle, ignores=il)
 
     def delete_table(self, table_name):
         # 删除表
-        try:
-            self.cursor.execute(f"DROP TABLE '{table_name}';")
-            self.log.debug(f"Delete table '{table_name}' successfully")
-            return {"status": "success", "message": f"Delete table '{table_name}' successfully"}
 
-        except sqlite3.OperationalError as e:
-            if "no such table" in str(e):
-                self.log.info(f"Delete table '{table_name}' failed , Because '{e}'")
-                return {"status": "failed", "message": f"Table '{table_name}' is not exists"}
-            else:
-                self.log.warning(f"Delete table '{table_name}' failed , Because '{e}'")
-                return {"status": "failed", "message": f"Create table '{table_name}' failed"}
+        query = f"DROP TABLE '{table_name}';"
+
+        handle = f"Delete table '{table_name}'"
+
+        il = IgnoreList(Ignore("no such table", f"Delete table '{table_name}'", f"Table '{table_name}' is not exists"))
+
+        return self.Execute.execute(query, handle, ignores=il)
+
+        # 以下是旧代码，仅作示例
+        # try:
+        #     self.cursor.execute(f"DROP TABLE '{table_name}';")
+        #     self.log.debug(f"Delete table '{table_name}' successfully")
+        #     return {"status": "success", "message": f"Delete table '{table_name}' successfully"}
+        #
+        # except sqlite3.OperationalError as e:
+        #     if "no such table" in str(e):
+        #         self.log.info(f"Delete table '{table_name}' failed , Because '{e}'")
+        #         return {"status": "failed", "message": f"Table '{table_name}' is not exists"}
+        #     else:
+        #         self.log.warning(f"Delete table '{table_name}' failed , Because '{e}'")
+        #         return {"status": "failed", "message": f"Create table '{table_name}' failed"}
 
     def rename_table(self, old_name, new_name):
         # 修改表名

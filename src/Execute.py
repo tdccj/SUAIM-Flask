@@ -50,7 +50,7 @@ class Execute:
                 for i in ignores.ignore:
                     if i.name in str(ex):
                         self.log.info(f"'{i.handle}' failed , Because '{ex}'")
-                        return {"status": "failed", "message": f"'{i.message}'"}
+                        return {"status": "failed", "message": f"{i.message}"}
                     else:
                         self.log.warning(f"'{i.handle}' failed , Because '{ex}'")
                         return {"status": "failed", "message": f"{handle} failed"}
