@@ -96,7 +96,7 @@ def update_item(db_path, db_table, db_id):
     return jsonify({'status': 'success', "item": str(item), 'def': 'update_item'}), 200
 
 
-@item_bp.route('/api/get/<string:db_path>/<string:db_table>', methods=['GET'])
+@item_bp.route('/api/get/<string:db_path>/<string:db_table>/all', methods=['GET'])
 def get_all_item(db_path, db_table):
     # 连接表单，返回所有item
     db = DB(db_path)

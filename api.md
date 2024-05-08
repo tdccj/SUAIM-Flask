@@ -12,15 +12,6 @@
 **返回**  
 - `{'status': 'success', "database": db_path, 'def': 'connect_database'}`
 
-### 1.2 获取所有表
-`GET /api/get/{db_path}`  
-获取数据库中所有表的列表。
-
-**参数**  
-- db_path: 数据库的路径
-
-**返回**  
-- `{'status': 'success', "tables": db.get_table_all(), 'def': 'get_table_all'}`
 
 ## 2. 表（Table）
 
@@ -56,6 +47,17 @@
 
 **返回**  
 - `{'status': str(re), 'def': 'rename_table'}`
+
+### 2.4 获取所有表
+`GET /api/get/{db_path}/all`  
+获取数据库中所有表的列表。
+
+**参数**  
+- db_path: 数据库的路径
+
+**返回**  
+- `{'status': 'success', "tables": db.get_table_all(), 'def': 'get_table_all'}`
+
 
 
 
@@ -119,7 +121,7 @@
 - `{'status': 'success', "item": str(item), 'def': 'update_item'}`
 
 ### 3.5 获取表中的所有 item
-`GET /api/get/{db_path}/{db_table}`  
+`GET /api/get/{db_path}/{db_table}/all`  
 连接到一个已存在的表，或者创建一个新的表。
 
 **参数**  

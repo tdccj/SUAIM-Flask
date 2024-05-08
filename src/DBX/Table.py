@@ -1,6 +1,5 @@
 # coding = utf-8
-import sqlite3
-from src.Logger import logger
+
 from src.Execute import Execute, Ignore, IgnoreList
 
 

@@ -48,3 +48,7 @@
 #### `v0.1.1-10`
 - DBX 将使用多继承模块化开发，和 api 对应，但仍然只有一个主类
 - 已将 Table 从 DBX 中剥离为父类模块之一，DBX 功能性和接口均不变
+#### `v0.1.1-11`
+- 删除 Table 多余的依赖
+- 将 api_database get_table_all 迁移至api_table
+- 修改 api 中含有 get_all一类方法 的 url 连接为后缀添加 `/all` 的格式
