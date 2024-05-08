@@ -38,5 +38,7 @@
 - 优化 Execute log 输出格式
 - 删除 DBX delete_table 的旧代码
 - DBX rename_table 成功应用 Execute
-
+#### `v0.1.1-8`
+- 删除 DBX rename_table 的旧代码
+- 将 api_table get_all_item 迁移到 api_item
 

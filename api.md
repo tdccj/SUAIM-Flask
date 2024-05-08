@@ -57,17 +57,7 @@
 **返回**  
 - `{'status': str(re), 'def': 'rename_table'}`
 
-### 2.4 获取表中的所有 item
-`GET /api/get/{db_path}/{db_table}`  
-连接到一个已存在的表，或者创建一个新的表。
 
-**参数**  
-- db_path: 数据库的路径  
-- db_table: 表的名称
-
-**返回**  
-- `{'status': "success", "columns": columns,
-    "data": all_data, 'def': 'get_all_item'}`
 
 ## 3. 物品（Item）
 
@@ -127,6 +117,18 @@
 
 **返回**  
 - `{'status': 'success', "item": str(item), 'def': 'update_item'}`
+
+### 3.5 获取表中的所有 item
+`GET /api/get/{db_path}/{db_table}`  
+连接到一个已存在的表，或者创建一个新的表。
+
+**参数**  
+- db_path: 数据库的路径  
+- db_table: 表的名称
+
+**返回**  
+- `{'status': "success", "columns": columns,
+    "data": all_data, 'def': 'get_all_item'}`
 
 ## 4. 二维码（QRCode）
 

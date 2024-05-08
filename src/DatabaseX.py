@@ -88,16 +88,3 @@ class DBX:
                                                                                               f"not exists"))
         return self.Execute.execute(query, handle, ignores=il)
 
-        # 以下为旧代码，仅作示例
-        # try:
-        #     self.cursor.execute(f"ALTER TABLE '{old_name}' RENAME TO '{new_name}'")
-        #     self.log.debug(f"Rename table '{old_name}' to '{new_name}' successfully")
-        #     return {"status": "success", "message": f"Rename table '{old_name}' to '{new_name}' successfully"}
-        #
-        # except sqlite3.OperationalError as e:
-        #     if "no such table" in str(e):
-        #         self.log.info(f"Rename table '{old_name}' to '{new_name}' failed , Because '{e}'")
-        #         return {"status": "failed", "message": f"Table '{old_name}' is not exists"}
-        #     else:
-        #         self.log.warning(f"Rename table '{old_name}' to '{new_name}' failed , Because '{e}'")
-        #         return {"status": "failed", "message": f"Rename table '{old_name}' to '{new_name}' failed"}

@@ -94,3 +94,20 @@ def update_item(db_path, db_table, db_id):
     item = db.get_item_data(db_id)
 
     return jsonify({'status': 'success', "item": str(item), 'def': 'update_item'}), 200
+
+
+@item_bp.route('/api/get/<string:db_path>/<string:db_table>', methods=['GET'])
+def get_all_item(db_path, db_table):
+    # 连接表单，返回所有item
+    db = DB(db_path)
+    db.connect_table(db_table)
+    all_data = db.get_item_all()
+    columns = db.get_normal_columns()
+
+    # 判断查询结果是否为空
+    if all_data is None:
+        return jsonify({'error': 'data not found in this table'}), 404
+    # print(all_data)
+
+    return jsonify({'status': "success", "columns": columns,
+                    "data": all_data, 'def': 'get_all_item'}), 200
