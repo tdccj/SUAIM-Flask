@@ -41,4 +41,7 @@
 #### `v0.1.1-8`
 - 删除 DBX rename_table 的旧代码
 - 将 api_table get_all_item 迁移到 api_item
-
+#### `v0.1.1-9`
+- 删除 api_table 中的弃用方法的代码，包括 get_all_name 和 get_all_data
+- DBX 中的表级操作已基本重构完成，api_table 适配业已基本完成
+- 下个版本将开始在 DBX 中重构 api_item 使用的 项级操作
