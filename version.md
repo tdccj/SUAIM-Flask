@@ -33,3 +33,10 @@
 - 去除 Execute 中多余的引号
 - 删除 DBX create_table 的旧代码
 - DBX delete_table 成功应用 Execute
+#### `v0.1.1-7`
+- 优化 DBX init log
+- 优化 Execute log 输出格式
+- 删除 DBX delete_table 的旧代码
+- DBX rename_table 成功应用 Execute
+
+

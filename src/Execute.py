@@ -41,7 +41,7 @@ class Execute:
             if commit is True:
                 self.conn.commit()  # 提交
 
-            self.log.debug(f"'{handle}' successfully")
+            self.log.debug(f'{handle} successfully')
 
             return {"status": "success", "message": f"{handle} successfully"}
 
@@ -49,13 +49,13 @@ class Execute:
             if ignores is not None:
                 for i in ignores.ignore:
                     if i.name in str(ex):
-                        self.log.info(f"'{i.handle}' failed , Because '{ex}'")
+                        self.log.info(f"{i.handle} failed , Because '{ex}'")
                         return {"status": "failed", "message": f"{i.message}"}
                     else:
-                        self.log.warning(f"'{i.handle}' failed , Because '{ex}'")
+                        self.log.warning(f"{i.handle} failed , Because '{ex}'")
                         return {"status": "failed", "message": f"{handle} failed"}
             else:
-                self.log.warning(f"'{handle}' failed , Because '{ex}'")
+                self.log.warning(f"{handle} failed , Because '{ex}'")
                 return {"status": "failed", "message": f"{handle} failed"}
 
 # if __name__ == '__main__':

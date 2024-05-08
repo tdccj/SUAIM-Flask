@@ -18,7 +18,7 @@ class DBX:
 
         self.conn = sqlite3.connect(self.path)  # 连接数据库
 
-        self.log.debug("Connect to database successfully")
+        self.log.debug(f"Connect to database '{path}' successfully")
 
         self.cursor = self.conn.cursor()  # 创建游标
 
@@ -77,31 +77,27 @@ class DBX:
 
         return self.Execute.execute(query, handle, ignores=il)
 
-        # 以下是旧代码，仅作示例
+    def rename_table(self, old_name, new_name):
+        # 修改表名
+
+        query = f"ALTER TABLE '{old_name}' RENAME TO '{new_name}'"
+
+        handle = f"Rename table '{old_name}' to '{new_name}'"
+
+        il = IgnoreList(Ignore("no such table", f"Rename table '{old_name}' to '{new_name}'", f"Table '{old_name}' is "
+                                                                                              f"not exists"))
+        return self.Execute.execute(query, handle, ignores=il)
+
+        # 以下为旧代码，仅作示例
         # try:
-        #     self.cursor.execute(f"DROP TABLE '{table_name}';")
-        #     self.log.debug(f"Delete table '{table_name}' successfully")
-        #     return {"status": "success", "message": f"Delete table '{table_name}' successfully"}
+        #     self.cursor.execute(f"ALTER TABLE '{old_name}' RENAME TO '{new_name}'")
+        #     self.log.debug(f"Rename table '{old_name}' to '{new_name}' successfully")
+        #     return {"status": "success", "message": f"Rename table '{old_name}' to '{new_name}' successfully"}
         #
         # except sqlite3.OperationalError as e:
         #     if "no such table" in str(e):
-        #         self.log.info(f"Delete table '{table_name}' failed , Because '{e}'")
-        #         return {"status": "failed", "message": f"Table '{table_name}' is not exists"}
+        #         self.log.info(f"Rename table '{old_name}' to '{new_name}' failed , Because '{e}'")
+        #         return {"status": "failed", "message": f"Table '{old_name}' is not exists"}
         #     else:
-        #         self.log.warning(f"Delete table '{table_name}' failed , Because '{e}'")
-        #         return {"status": "failed", "message": f"Create table '{table_name}' failed"}
-
-    def rename_table(self, old_name, new_name):
-        # 修改表名
-        try:
-            self.cursor.execute(f"ALTER TABLE '{old_name}' RENAME TO '{new_name}'")
-            self.log.debug(f"Rename table '{old_name}' to '{new_name}' successfully")
-            return {"status": "success", "message": f"Rename table '{old_name}' to '{new_name}' successfully"}
-
-        except sqlite3.OperationalError as e:
-            if "no such table" in str(e):
-                self.log.info(f"Rename table '{old_name}' to '{new_name}' failed , Because '{e}'")
-                return {"status": "failed", "message": f"Table '{old_name}' is not exists"}
-            else:
-                self.log.warning(f"Rename table '{old_name}' to '{new_name}' failed , Because '{e}'")
-                return {"status": "failed", "message": f"Rename table '{old_name}' to '{new_name}' failed"}
+        #         self.log.warning(f"Rename table '{old_name}' to '{new_name}' failed , Because '{e}'")
+        #         return {"status": "failed", "message": f"Rename table '{old_name}' to '{new_name}' failed"}
