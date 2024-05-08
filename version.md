@@ -57,3 +57,7 @@
 - DBX 已继承 Item
 - 为 Execute 添加 fetchall 选项，用于返回查询数据，开发中
 - 创建 judgeFetchall 函数辅助 fetchall
+#### `v0.1.1-13`
+- 修改 judgeFetchall 为 私有函数
+- 定义 Response 类用于传参
+- 完成 __judgeFetchall 有待测试

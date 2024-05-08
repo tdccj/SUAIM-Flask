@@ -10,6 +10,12 @@ from src import Logger
 # 尤其是简化 DBX 的异常处理步骤。
 # ------------------------------
 
+class Response:
+    def __init__(self, status: str, message: str, result: dict = None):
+        self.status = status
+        self.message = message
+        self.result = result
+
 
 class Ignore:
     def __init__(self, name: str, handle: str, message: str):
@@ -28,9 +34,12 @@ class Execute:
         self.conn = conn
         self.log = log
 
-    def judgeFetchall(self):
-        # todo 将下面的fetchall判断逻辑写于此，并应用到后续上
-        pass
+    @staticmethod
+    def __judgeFetchall(fetchall: bool, response: dict, fetch: dict):
+        if fetchall is True:
+            return response.update(fetch)
+        else:
+            return response
 
     def execute(self, query: str, handle: str, commit: bool = False,
                 ignores: IgnoreList = None, fetchall: bool = False):
@@ -47,11 +56,10 @@ class Execute:
 
             self.log.debug(f'{handle} successfully')
 
-            if fetchall is True:
-                return {"status": "success", "message": f"{handle} successfully",
-                        "result": self.conn.cursor().fetchall()}
-            else:
-                return {"status": "success", "message": f"{handle} successfully"}
+            return self.__judgeFetchall(
+                fetchall,
+                {"status": "success", "message": f"{handle} successfully"},
+                {"result": self.conn.cursor().fetchall()})
 
         except sqlite3.OperationalError as ex:
             if ignores is not None:
