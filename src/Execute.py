@@ -1,4 +1,5 @@
 # coding = utf-8
+import sqlite3
 from sqlite3 import Connection
 
 from src import Logger
@@ -10,25 +11,50 @@ from src import Logger
 # ------------------------------
 
 
-def execute(conn: Connection, query: str, handle: str, log: Logger, commit: bool = False, ignore: list = None):
+class Ignore:
+    def __init__(self, name: str, handle: str, message: str):
+        self.name = name
+        self.handle = handle
+        self.message = message
+
+
+class IgnoreList:
+    def __init__(self, *args: Ignore):
+        self.ignore = args
+
+
+def execute(conn: Connection, query: str, handle: str, log: Logger, commit: bool = False,
+            ignores: IgnoreList = None):
     # 执行查询语句    query
     # 方法名    handle
     # 提交事务  commit=True
-    # 忽略的异常类型   ignore
+    # 忽略的异常类型   ignore = [{type,handle,message}]
     try:
 
         conn.cursor().execute("")
 
         conn.commit()  # 提交
 
-        self.log.debug(f"Create to table '{table_name}' successfully")
+        log.debug(f"'{handle}' successfully")
 
-        return {"status": "success", "message": f"Create table '{table_name}' successfully"}
+        return {"status": "success", "message": f"{handle} successfully"}
 
     except sqlite3.OperationalError as ex:
-        if "already exists" in str(ex):
-            self.log.info(f"Create table '{table_name}' failed , Because '{ex}'")
-            return {"status": "failed", "message": f"Table '{table_name}' is already exists"}
+        if ignores is not None:
+            for i in ignores.ignore:
+                if i.name in str(ex):
+                    log.info(f"'{i.handle}' failed , Because '{ex}'")
+                    return {"status": "failed", "message": f"'{i.message}'"}
+                else:
+                    log.waring(f"'{i.handle}' failed , Because '{ex}'")
+                    return {"status": "failed", "message": f"{handle} failed"}
         else:
-            self.log.warning(f"Create table '{table_name}' failed , Because '{ex}'")
-            return {"status": "failed", "message": f"Create table {table_name} failed"}
+            log.waring(f"'{handle}' failed , Because '{ex}'")
+            return {"status": "failed", "message": f"{handle} failed"}
+
+# if __name__ == '__main__':
+#     a = Ignore("1", "2", "3")
+#     b = Ignore("11", "22", "33")
+#     c = IgnoreList(a, b).ignore
+#     for i in c:
+#         print(i.name)
