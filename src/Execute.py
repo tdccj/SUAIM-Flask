@@ -28,7 +28,7 @@ def execute(conn: Connection, query: str, handle: str, log: Logger, commit: bool
     # 执行查询语句    query
     # 方法名    handle
     # 提交事务  commit=True
-    # 忽略的异常类型   ignore = [{type,handle,message}]
+    # 忽略的异常类型   ignores
     try:
 
         conn.cursor().execute("")
