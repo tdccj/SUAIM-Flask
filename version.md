@@ -22,6 +22,9 @@
 - 创建 DBX rename_table
 - 修正 log 中的字符串显示
 #### `v0.1.1-4`
-- 由于 DBX 中的异常处理过于繁琐，将部分操作整理为一个通用模块 `Execute`
-- `Execute`已创建，尚未完成，在测试逻辑
-- `Execute`传入`IgnoreList`忽略多个异常
+- 由于 DBX 中的异常处理过于繁琐，将部分操作整理为一个通用模块 Execute
+- Execute 已创建，尚未完成，在测试逻辑
+- Execute 传入 IgnoreList 忽略多个异常
+#### `v0.1.1-5`
+- Execute 基本完成
+- DBX create_table 成功应用 Execute

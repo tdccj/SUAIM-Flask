@@ -7,6 +7,7 @@
 
 import sqlite3
 from src.Logger import logger
+from src.Execute import Execute, Ignore, IgnoreList
 
 
 class DBX:
@@ -41,34 +42,57 @@ class DBX:
         #   ascription  TEXT    归属人
         #   ________________________________________
 
-        try:
-            self.cursor.execute(f'''CREATE TABLE "{table_name}" (
-            id          INTEGER PRIMARY KEY AUTOINCREMENT,
-            name        TEXT    NOT NULL,
-            type        TEXT    NOT NULL,
-            tag         TEXT,
-            quantity    REAL    NOT NULL,
-            price       REAL,
-            consumables TEXT,   
-            remark      TEXT,
-            ascription  TEXT    NOT NULL
+        query = f'''CREATE TABLE "{table_name}" (
+             id          INTEGER PRIMARY KEY AUTOINCREMENT,
+             name        TEXT    NOT NULL,
+             type        TEXT    NOT NULL,
+             tag         TEXT,
+             quantity    REAL    NOT NULL,
+             price       REAL,
+             consumables TEXT,
+             remark      TEXT,
+             ascription  TEXT    NOT NULL
+        
+        
+             );'''
 
+        handle = f"Create table '{table_name}'"
 
-            );''')
+        # 将重复创建等不重要的报错其归为 info，其他报错为 warning 以便排错
+        il = IgnoreList(Ignore("already exists", f"Create table '{table_name}'", f"Table '{table_name}' is already "
+                                                                                 f"exists"))
 
-            self.conn.commit()  # 提交
+        return Execute(self.conn, self.log).execute(query, handle, ignores=il)
 
-            self.log.debug(f"Create to table '{table_name}' successfully")
-
-            return {"status": "success", "message": f"Create table '{table_name}' successfully"}
-
-        except sqlite3.OperationalError as ex:
-            if "already exists" in str(ex):
-                self.log.info(f"Create table '{table_name}' failed , Because '{ex}'")
-                return {"status": "failed", "message": f"Table '{table_name}' is already exists"}
-            else:
-                self.log.warning(f"Create table '{table_name}' failed , Because '{ex}'")
-                return {"status": "failed", "message": f"Create table {table_name} failed"}
+        # 下面是旧代码，仅作示例
+        # try:
+        #     self.cursor.execute(f'''CREATE TABLE "{table_name}" (
+        #     id          INTEGER PRIMARY KEY AUTOINCREMENT,
+        #     name        TEXT    NOT NULL,
+        #     type        TEXT    NOT NULL,
+        #     tag         TEXT,
+        #     quantity    REAL    NOT NULL,
+        #     price       REAL,
+        #     consumables TEXT,
+        #     remark      TEXT,
+        #     ascription  TEXT    NOT NULL
+        #
+        #
+        #     );''')
+        #
+        #     self.conn.commit()  # 提交
+        #
+        #     self.log.debug(f"Create table '{table_name}' successfully")
+        #
+        #     return {"status": "success", "message": f"Create table '{table_name}' successfully"}
+        #
+        # except sqlite3.OperationalError as ex:
+        #     if "already exists" in str(ex):
+        #         self.log.info(f"Create table '{table_name}' failed , Because '{ex}'")
+        #         return {"status": "failed", "message": f"Table '{table_name}' is already exists"}
+        #     else:
+        #         self.log.warning(f"Create table '{table_name}' failed , Because '{ex}'")
+        #         return {"status": "failed", "message": f"Create table {table_name} failed"}
 
     def delete_table(self, table_name):
         # 删除表

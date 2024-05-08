@@ -23,34 +23,40 @@ class IgnoreList:
         self.ignore = args
 
 
-def execute(conn: Connection, query: str, handle: str, log: Logger, commit: bool = False,
-            ignores: IgnoreList = None):
-    # 执行查询语句    query
-    # 方法名    handle
-    # 提交事务  commit=True
-    # 忽略的异常类型   ignores
-    try:
+class Execute:
+    def __init__(self, conn: Connection, log: Logger):
+        self.conn = conn
+        self.log = log
 
-        conn.cursor().execute("")
+    def execute(self, query: str, handle: str, commit: bool = False,
+                ignores: IgnoreList = None):
+        # 执行查询语句    query
+        # 方法名    handle
+        # 提交事务  commit=True
+        # 忽略的异常类型   ignores
+        try:
 
-        conn.commit()  # 提交
+            self.conn.cursor().execute(query)
 
-        log.debug(f"'{handle}' successfully")
+            if commit is True:
+                self.conn.commit()  # 提交
 
-        return {"status": "success", "message": f"{handle} successfully"}
+            self.log.debug(f"'{handle}' successfully")
 
-    except sqlite3.OperationalError as ex:
-        if ignores is not None:
-            for i in ignores.ignore:
-                if i.name in str(ex):
-                    log.info(f"'{i.handle}' failed , Because '{ex}'")
-                    return {"status": "failed", "message": f"'{i.message}'"}
-                else:
-                    log.waring(f"'{i.handle}' failed , Because '{ex}'")
-                    return {"status": "failed", "message": f"{handle} failed"}
-        else:
-            log.waring(f"'{handle}' failed , Because '{ex}'")
-            return {"status": "failed", "message": f"{handle} failed"}
+            return {"status": "success", "message": f"{handle} successfully"}
+
+        except sqlite3.OperationalError as ex:
+            if ignores is not None:
+                for i in ignores.ignore:
+                    if i.name in str(ex):
+                        self.log.info(f"'{i.handle}' failed , Because '{ex}'")
+                        return {"status": "failed", "message": f"'{i.message}'"}
+                    else:
+                        self.log.warning(f"'{i.handle}' failed , Because '{ex}'")
+                        return {"status": "failed", "message": f"{handle} failed"}
+            else:
+                self.log.warning(f"'{handle}' failed , Because '{ex}'")
+                return {"status": "failed", "message": f"{handle} failed"}
 
 # if __name__ == '__main__':
 #     a = Ignore("1", "2", "3")
