@@ -28,8 +28,12 @@ class Execute:
         self.conn = conn
         self.log = log
 
+    def judgeFetchall(self):
+        # todo 将下面的fetchall判断逻辑写于此，并应用到后续上
+        pass
+
     def execute(self, query: str, handle: str, commit: bool = False,
-                ignores: IgnoreList = None):
+                ignores: IgnoreList = None, fetchall: bool = False):
         # 执行查询语句    query
         # 方法名    handle
         # 提交事务  commit=True
@@ -43,7 +47,11 @@ class Execute:
 
             self.log.debug(f'{handle} successfully')
 
-            return {"status": "success", "message": f"{handle} successfully"}
+            if fetchall is True:
+                return {"status": "success", "message": f"{handle} successfully",
+                        "result": self.conn.cursor().fetchall()}
+            else:
+                return {"status": "success", "message": f"{handle} successfully"}
 
         except sqlite3.OperationalError as ex:
             if ignores is not None:

@@ -7,20 +7,23 @@ import sqlite3
 #   ——————————————————————————————————————————————————————————
 
 from src.DBX.Table import Table
+from src.DBX.Item import Item
 from src.Execute import Execute
 from src.Logger import logger
 
 
-class DBX(Table):
+class DBX(Table, Item):
     # DBX 现在使用多继承实现模块化开发
-    def __init__(self, path):
+    def __init__(self, db_name):
         self.log = logger("DatabaseX")  # 创建日志记录
 
-        self.path = "../database/" + path
+        self.db_name = db_name
+
+        self.path = "../database/" + self.db_name
 
         self.conn = sqlite3.connect(self.path)  # 连接数据库
 
-        self.log.debug(f"Connect to database '{path}' successfully")
+        self.log.debug(f"Connect to database '{self.db_name}' successfully")
 
         self.cursor = self.conn.cursor()  # 创建游标
 
@@ -29,6 +32,7 @@ class DBX(Table):
         self.Execute = Execute(self.conn, self.log)
 
         # 将 init 后的静态对象传给父类，避免重复初始化
-        Table.__init__(self, self.columns, self.Execute)
+        Table.__init__(self, self.columns, self.Execute, self.db_name)
+        Item.__init__(self, self.columns, self.Execute, self.db_name)
 
     pass

@@ -5,9 +5,10 @@ from src.Execute import Execute, Ignore, IgnoreList
 
 class Table:
 
-    def __init__(self, columns: list, execute: Execute):
+    def __init__(self, columns: list, execute: Execute, db_name: str):
         self.columns = columns
         self.Execute = execute
+        self.db_name = db_name
 
     def get_normal_columns(self):
         # 获取默认列名
@@ -70,3 +71,12 @@ class Table:
         il = IgnoreList(Ignore("no such table", f"Rename table '{old_name}' to '{new_name}'", f"Table '{old_name}' is "
                                                                                               f"not exists"))
         return self.Execute.execute(query, handle, ignores=il)
+
+    def get_table_all(self):
+        # 获取所有表名
+        query = "SELECT name FROM sqlite_master WHERE type='table'"
+
+        handle = f"Get all tables from '{self.db_name}'"
+
+        return self.Execute.execute(query, handle)
+

@@ -50,6 +50,6 @@ else:
     print('connect_Failed')
 print(response.text)
 
-# todo 基本验证通过
+#  基本验证通过
 # 第二列从现在开始用于type
 # 从现在开始不再对输入数据库的中文进行编码&打印标签的id可以正常显示中文了

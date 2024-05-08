@@ -52,3 +52,8 @@
 - 删除 Table 多余的依赖
 - 将 api_database get_table_all 迁移至api_table
 - 修改 api 中含有 get_all一类方法 的 url 连接为后缀添加 `/all` 的格式
+#### `v0.1.1-12`
+- 修改 DBX 初始化变量名，添加 db_name 中间变量用于传递给父类，功能保持不变
+- DBX 已继承 Item
+- 为 Execute 添加 fetchall 选项，用于返回查询数据，开发中
+- 创建 judgeFetchall 函数辅助 fetchall
