@@ -6,6 +6,8 @@ Small-Scale Universal Asset/Inventory Management 泛用小型资产/库存管理
 > 这次 SUAIM 将引入 Vue3 作为前端开发框架，并对 Flask 后端进行一定程度的重构。  
 > （原 Flutter 客户端将暂时搁置）
 
+### 本项目使用的开源协议：`Apache License Version 2.0`
+
 ## 背景
 > 现有的大型资产/库存管理系统多为ERP/WMS系统的子模块，而小型（应用于个人/小团队）的资产/库存管理系统，多为操作重复且封闭的各种小程序，难以二次开发。
 

@@ -61,3 +61,6 @@
 - 修改 judgeFetchall 为 私有函数
 - 定义 Response 类用于传参
 - 完成 __judgeFetchall 有待测试
+#### `v0.1.1-14`
+- **为了项目的可持续性发展，将开源协议更改为更为宽松的 Apache License Version 2.0**
+- 对于依赖的协议声明有待完善
