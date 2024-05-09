@@ -55,7 +55,7 @@
 #### `v0.1.1-12`
 - 修改 DBX 初始化变量名，添加 db_name 中间变量用于传递给父类，功能保持不变
 - DBX 已继承 Item
-- 为 Execute 添加 fetchall 选项，用于返回查询数据，开发中
+- 为 Execute.execute 添加 fetchall 选项，用于返回查询数据，开发中
 - 创建 judgeFetchall 函数辅助 fetchall
 #### `v0.1.1-13`
 - 修改 judgeFetchall 为 私有函数
@@ -68,3 +68,13 @@
 - 修改 judgeFetchall 函数为 judge_fetchall 符合命名规则
 - 修复 judge_fetchall `fetchall==True` 时，返回 None 的问题
 - 完成 Table get_table_all 方法
+#### `v0.1.1-16`
+- 修改 api_table 中的方法为 Ee标准返回(Execute.execute) 直接调用返回
+- 为 Execute.execute 添加 enable 参数
+  - 使用 `enable = False` 将函数用作标准返回格式化
+  - 需要传入 `query = ""`，以避免出现异常
+- 为 DBX 添加 result 方法，用以给 connect_database 实现 Ee标准输出
+- 修改 api_database 中的方法为 Ee标准返回 直接调用返回
+- API 文档更新 Ee标准返回
+- 为 Table rename_table 添加 already exists 消息返回
+- 修复 Execute.execute 中有关于 ignores 循环的逻辑错误

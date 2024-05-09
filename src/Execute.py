@@ -19,9 +19,9 @@ class Response:
 
 class Ignore:
     def __init__(self, name: str, handle: str, message: str):
-        self.name = name
-        self.handle = handle
-        self.message = message
+        self.name = name    # 报错中含有的名称特征
+        self.handle = handle    # 用于日志记录的自定义方法名
+        self.message = message  # 自定义返回信息
 
 
 class IgnoreList:
@@ -42,15 +42,21 @@ class Execute:
         else:
             return response
 
-    def execute(self, query: str, handle: str, commit: bool = False,
-                ignores: IgnoreList = None, fetchall: bool = False):
-        # 执行查询语句    query
-        # 方法名    handle
-        # 提交事务  commit=True
-        # 忽略的异常类型   ignores
-        try:
+    def execute(self,
+                query: str,  # 查询语句
+                handle: str,  # 自定义方法名
+                commit: bool = False,  # 是否提交事务
+                ignores: IgnoreList = None,  # 忽略的异常类型
+                fetchall: bool = False,  # 是否有查询结果需要返回
+                enable: bool = True,  # 是否执行查询语句（或仅作为输出标准化）
+                ):
+        # 在使用 enable = False 将函数用作标准输出时，
+        # 需要传入 query = "" ，以避免出现异常。
 
-            fetch = self.conn.cursor().execute(query).fetchall()
+        try:
+            fetch = None
+            if enable is True:
+                fetch = self.conn.cursor().execute(query).fetchall()
 
             if commit is True:
                 self.conn.commit()  # 提交
@@ -68,9 +74,9 @@ class Execute:
                     if i.name in str(ex):
                         self.log.info(f"{i.handle} failed , Because '{ex}'")
                         return {"status": "failed", "message": f"{i.message}"}
-                    else:
-                        self.log.warning(f"{i.handle} failed , Because '{ex}'")
-                        return {"status": "failed", "message": f"{handle} failed"}
+
+                    self.log.warning(f"{i.handle} failed , Because '{ex}'")
+                return {"status": "failed", "message": f"{handle} failed"}
             else:
                 self.log.warning(f"{handle} failed , Because '{ex}'")
                 return {"status": "failed", "message": f"{handle} failed"}
