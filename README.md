@@ -11,7 +11,7 @@ Small-Scale Universal Asset/Inventory Management 泛用小型资产/库存管理
 - Apache License Version 2.0 开源协议见 `LICENSE`
 ### 本项目部分或全部使用： HarmonyOS Sans 开源字体
 - HarmonyOS Sans 开源协议见 `font/HarmonyOS_Sans_SC/LICENSE.txt`
-- HarmonyOS Sans 字体版权所有 © 2021 华为设备有限公司。根据 HarmonyOS Sans 字体许可协议使用。
+- HarmonyOS Sans 字体版权所有 © 2021 华为设备有限公司，根据 HarmonyOS Sans 字体许可协议使用。
 ### 本项目主要基于：Python3.10、Flask 和 sqlite3
 - Flask 使用 [BSD-3-Clause license](https://github.com/pallets/flask/#BSD-3-Clause-1-ov-file)
 - Python 及其内置库 sqlite3 使用 [PSF 开源许可协议](https://github.com/python/cpython/blob/3.12/LICENSE)
