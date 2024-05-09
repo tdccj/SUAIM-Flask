@@ -35,9 +35,10 @@ class Execute:
         self.log = log
 
     @staticmethod
-    def __judgeFetchall(fetchall: bool, response: dict, fetch: dict):
+    def __judge_fetchall(fetchall: bool, response: dict, fetch: dict):
         if fetchall is True:
-            return response.update(fetch)
+            response.update(fetch)
+            return response
         else:
             return response
 
@@ -49,17 +50,17 @@ class Execute:
         # 忽略的异常类型   ignores
         try:
 
-            self.conn.cursor().execute(query)
+            fetch = self.conn.cursor().execute(query).fetchall()
 
             if commit is True:
                 self.conn.commit()  # 提交
 
             self.log.debug(f'{handle} successfully')
 
-            return self.__judgeFetchall(
+            return self.__judge_fetchall(
                 fetchall,
                 {"status": "success", "message": f"{handle} successfully"},
-                {"result": self.conn.cursor().fetchall()})
+                {"result": fetch})
 
         except sqlite3.OperationalError as ex:
             if ignores is not None:

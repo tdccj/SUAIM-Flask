@@ -74,9 +74,8 @@ class Table:
 
     def get_table_all(self):
         # 获取所有表名
-        query = "SELECT name FROM sqlite_master WHERE type='table'"
+        query = "SELECT tbl_name FROM sqlite_master WHERE type='table'"
 
         handle = f"Get all tables from '{self.db_name}'"
 
-        return self.Execute.execute(query, handle)
-
+        return self.Execute.execute(query, handle, fetchall=True)
