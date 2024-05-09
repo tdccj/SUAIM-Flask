@@ -35,4 +35,6 @@ class DBX(Table, Item):
         Table.__init__(self, self.columns, self.Execute, self.db_name)
         Item.__init__(self, self.columns, self.Execute, self.db_name)
 
-    pass
+    def result(self):
+        # 获取 connect(init) 后的返回值
+        return self.Execute.execute("", f"Get database '{self.db_name}' connect result", enable=False)

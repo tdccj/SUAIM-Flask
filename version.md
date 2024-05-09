@@ -78,3 +78,7 @@
 - API 文档更新 Ee标准返回
 - 为 Table rename_table 添加 already exists 消息返回
 - 修复 Execute.execute 中有关于 ignores 循环的逻辑错误
+- 在 README 中添加如下信息：
+  - 项目所使用字体开源协议信息，及其版权归属信息
+  - 项目所使用依赖开源协议信息
+- 修改部分 README 描述和结构

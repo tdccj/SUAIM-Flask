@@ -68,8 +68,16 @@ class Table:
 
         handle = f"Rename table '{old_name}' to '{new_name}'"
 
-        il = IgnoreList(Ignore("no such table", f"Rename table '{old_name}' to '{new_name}'", f"Table '{old_name}' is "
-                                                                                              f"not exists"))
+        il = IgnoreList(
+            Ignore(
+                "no such table",
+                f"Rename table '{old_name}' to '{new_name}'",
+                f"Table '{old_name}' is not exists", ),
+            Ignore(
+                "there is already another table or index with this name",
+                "Rename table '{old_name}' to '{new_name}'",
+                f"Table '{new_name}' is already exists", ),
+        )
         return self.Execute.execute(query, handle, ignores=il)
 
     def get_table_all(self):

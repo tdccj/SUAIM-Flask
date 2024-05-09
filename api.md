@@ -1,5 +1,36 @@
 # SUAIM API文档
 
+## 前言
+
+ SUAIM-溯物 的大部分标准 API 将采用由 `src/Execute.execute( )` 函数定义的 Ee 标准返回。
+
+**> 使用 Ee 标准化返回的 API 将有 _返回 Ee_ 字样：**
+- 由于状态几乎固定， API 文档中返回内容默认为 `message` 加可选 `result`的示例或描述。
+
+
+- API 文档中可能表述 `message` 返回的几种情况，服务器将视情况返回对应 `message`
+
+ 
+ **> 其主要由两对必要键值对和一对可选键值对组成，分别为：**
+ - `status`：状态，用于指示执行结果。
+
+ 
+ - `message`：执行结果消息。
+ 
+ 
+ - `result`：有数据返回时将会增加可选的 result 键值对，用以返回数据。
+ 
+**> 其中 `status` 有以下状态：**
+- `success`: 执行成功。
+ 
+
+- `failed`: 执行失败。
+
+
+**▲ 状态为 `failed` 时，将不会返回 `result`。** 这将强制前端校验是否执行成功。
+
+
+
 ## 1. 库（Database）
 
 ### 1.1 连接或创建数据库
@@ -9,8 +40,9 @@
 **参数**  
 - db_path: 数据库的路径
 
-**返回**  
-- `{'status': 'success', "database": db_path, 'def': 'connect_database'}`
+**返回  
+Ee message:**
+- `Get database '{db_name}' connect result [successfully|failed]`
 
 
 ## 2. 表（Table）
@@ -23,8 +55,10 @@
 - db_path: 数据库的路径  
 - db_table: 表的名称
 
-**返回**  
-- `{'status': status, "message": message, 'table': f'{db_path}/{db_table}', 'def': 'connect_table'}`
+**返回   
+Ee message:**
+- `Create table '{table_name}' [successfully|failed]`  
+- 表单已存在 `Table '{table_name}' is already exists`
 
 ### 2.2 删除表
 `DELETE /api/delete/{db_path}/{db_table}`  
@@ -34,8 +68,10 @@
 - db_path: 数据库的路径  
 - db_table: 表的名称
 
-**返回**  
-- `{'status': "success", 'def': 'delete_table'}`
+**返回   
+Ee message:**
+- `Delete table '{table_name}' [successfully|failed]`  
+- 表单不存在 `Table '{table_name}' is not exists`
 
 ### 2.3 重命名表
 `POST /api/rename/{db_path}/table`  
@@ -45,8 +81,11 @@
 - old_name: 旧表名  
 - new_name: 新表名
 
-**返回**  
-- `{'status': str(re), 'def': 'rename_table'}`
+**返回   
+Ee message:**
+- `Rename table '{old_name}' to '{new_name}' [successfully|failed]`
+- 旧表单不存在 `Table '{old_name}' is not exists`
+- 新表单已存在 `Table '{new_name}' is already exists`
 
 ### 2.4 获取所有表
 `GET /api/get/{db_path}/all`  
@@ -55,8 +94,12 @@
 **参数**  
 - db_path: 数据库的路径
 
-**返回**  
-- `{'status': 'success', "tables": db.get_table_all(), 'def': 'get_table_all'}`
+**返回   
+Ee message:**
+- `Get all tables from '{db_name}' [successfully|failed]`  
+
+**Ee result:**
+- `[('{table_name}',),...]`
 
 
 
