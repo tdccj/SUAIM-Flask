@@ -8,7 +8,7 @@
 - 添加登录验证提高安全性。
 ### `v0.1.1`开发中
 - 重构 Database 为 DatabaseX ，以期解决低可靠性问题，将提供 容错、验证、
-备份、恢复、日志记录等功能。
+  备份、恢复、日志记录等功能。
 #### `v0.1.1-1`
 - 添加开发日志
 - 逐步替换 api_database 中的 DB 类为 DBX
@@ -46,8 +46,8 @@
 - DBX 中的表级操作已基本重构完成，api_table 适配业已基本完成
 - 下个版本将开始在 DBX 中重构 api_item 使用的 项级操作
 #### `v0.1.1-10`
-- DBX 将使用多继承模块化开发，和 api 对应，但仍然只有一个主类
-- 已将 Table 从 DBX 中剥离为父类模块之一，DBX 功能性和接口均不变
+- **DBX 将使用多继承模块化开发，和 api 对应，但仍然只有一个主类**
+- **已将 Table 从 DBX 中剥离为父类模块之一，DBX 功能性和接口均不变**
 #### `v0.1.1-11`
 - 删除 Table 多余的依赖
 - 将 api_database get_table_all 迁移至api_table
@@ -82,3 +82,10 @@
   - 项目所使用字体开源协议信息，及其版权归属信息
   - 项目所使用依赖开源协议信息
 - 修改部分 README 描述和结构
+#### `v0.1.1-17`
+- 创建 Query 类 为 Execute.execute 添加 query 的 values: tuple 支持
+  - 用以传入查询附加参数，防止 sql 注入
+- 修改 Ignore 传入参数 name 为 feature，更加便于理解
+- 为 Execute.execute 添加新判断，防止 fetchall 返回 None
+- 完成 Table get_item_data
+- api get_item_data 已应用 DBX
