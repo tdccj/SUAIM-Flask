@@ -89,3 +89,8 @@
 - 为 Execute.execute 添加新判断，防止 fetchall 返回 None
 - 完成 Table get_item_data
 - api get_item_data 已应用 DBX
+#### `v0.1.1-18`
+- 修复由于引号造成的 get_item_data 问题
+- 完成 Table create_item
+- 删除 Item 中的多余依赖
+- api create_item 已应用 DBX

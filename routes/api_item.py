@@ -1,5 +1,7 @@
 # coding = utf-8
 from flask import Blueprint, request, jsonify
+
+from src.DBX.Item import ItemData
 from src.Database import DB
 from src.DatabaseX import DBX
 
@@ -18,29 +20,12 @@ def create_item(db_path, db_table):
     # 在表中创建新物品
 
     # connect database
-    db = DB(db_path)
-    db.connect_table(db_table)
+    db = DBX(db_path)
 
     # get data
     data = request.get_json()
-    name = data['name']
-    item_type = data['type']
-    quantity = data['quantity']
-    ascription = data['ascription']
-    try:
-        tag = data['tag']
-        price = data['price']
-        consumables = data['consumables']
-        remark = data['remark']
-    except KeyError:
-        tag = None
-        price = None
-        consumables = None
-        remark = None
 
-    # create item
-    row_id = db.create_item(name, item_type, quantity, ascription, tag, price, consumables, remark)
-    return jsonify({'status': 'success', "id": row_id, 'def': 'create_item'}), 200
+    return jsonify(db.create_item(db_table, ItemData(**data))), 200
 
 
 @item_bp.route('/api/delete/<string:db_path>/<string:db_table>/<int:db_id>', methods=['DELETE'])
