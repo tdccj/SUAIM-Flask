@@ -38,7 +38,7 @@ class Item:
 
         query = f"SELECT * FROM '{table_name}' WHERE id = ?"
 
-        handle = f"Get a item {item_id} data from table '{table_name}' in '{self.db_name}'"
+        handle = f"Get an item {item_id} data from table '{table_name}' in database '{self.db_name}'"
 
         # ignore = Ignore("")
 
@@ -60,7 +60,7 @@ class Item:
 
         res = self.Execute.execute(
             Query(query, values),
-            f"Create a item '{item.name}' in database '{self.db_name}' table '{table_name}'",
+            f"Create an item '{item.name}' from table '{table_name}' in database '{self.db_name}'",
             commit=True,
         )
 
@@ -73,3 +73,14 @@ class Item:
             res["result"] = res1["result"]
 
         return res
+
+    def delete_item(self, table_name: str, id_db: int, real: bool = False):
+        # 删除项，默认为软删除即标记删除，而非实质性删除，以提供容错性
+        if real:
+            query = f"DELETE from '{table_name}' WHERE id = {id_db}"
+            handle = f"Hard-Delete an item {id_db} from table '{table_name}' in database '{self.db_name}'"
+        else:
+            query = f"UPDATE '{table_name}' SET show = 0 WHERE id = {id_db}"
+            handle = f"Soft-delete an item {id_db} from table '{table_name}' in database '{self.db_name}'"
+
+        return self.Execute.execute(query, handle, commit=True)

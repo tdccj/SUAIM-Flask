@@ -87,10 +87,16 @@
   - 用以传入查询附加参数，防止 sql 注入
 - 修改 Ignore 传入参数 name 为 feature，更加便于理解
 - 为 Execute.execute 添加新判断，防止 fetchall 返回 None
-- 完成 Table get_item_data
+- 完成 item get_item_data
 - api get_item_data 已应用 DBX
 #### `v0.1.1-18`
 - 修复由于引号造成的 get_item_data 问题
-- 完成 Table create_item
+- 完成 item create_item
 - 删除 Item 中的多余依赖
 - api create_item 已应用 DBX
+#### `v0.1.1-19`
+- 为标准表添加新的 'show' 字段，用于控制显示和标记删除
+- 完成 item delete_item 并默认为标记删除，而不是实质删除
+- 修复了一些自然语法错误
+- 理论上 sqlite3 默认自动提交，但依旧提供commit选项，可以用于区分查询和增删改
+- api delete_item 尚未应用 DBX
