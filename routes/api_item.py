@@ -1,6 +1,7 @@
 # coding = utf-8
 from flask import Blueprint, request, jsonify
 from src.Database import DB
+from src.DatabaseX import DBX
 
 item_bp = Blueprint('api_item', __name__)
 
@@ -8,22 +9,8 @@ item_bp = Blueprint('api_item', __name__)
 @item_bp.route('/api/get/<string:db_path>/<string:db_table>/<int:item_id>', methods=['GET'])
 def get_item_data(db_path, db_table, item_id):
     # 以id查询物品信息
-
-    # 连接数据库列表并查询
-    db = DB(db_path)
-    db.connect_table(db_table)
-    row = db.get_item_data(item_id)
-
-    # 判断查询结果是否为空
-    if row is None:
-        return jsonify({'error': 'item not found'}), 404
-
-    # 处理数据
-    item_info = {'id': row[0], 'name': row[1], 'type': row[2], 'tag': row[3], 'quantity': row[4], 'price': row[5],
-                 'consumables': row[6], 'remark': row[7], 'ascription': row[8]}
-
-    # 返回响应
-    return jsonify({'status': 'success', "data": item_info, 'def': 'get_item_data'}), 200
+    db = DBX(db_path)
+    return jsonify(db.get_item_data(db_table, item_id)), 200
 
 
 @item_bp.route('/api/create/<string:db_path>/<string:db_table>/item', methods=['POST'])
