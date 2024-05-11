@@ -56,7 +56,7 @@ class Execute:
                 query: Union[str, Query],  # 查询语句
                 handle: str,  # 自定义方法名
                 commit: bool = False,  # 是否提交事务
-                ignores: IgnoreList = None,  # 忽略的异常类型
+                ignore_list: IgnoreList = None,  # 忽略的异常类型
                 fetchall: bool = False,  # 是否有查询结果需要返回
                 enable: bool = True,  # 是否执行查询语句（或仅作为输出标准化）
                 ):
@@ -84,6 +84,11 @@ class Execute:
                 self.log.info(f'{handle} failed , Because result is None')
                 return {"status": "failed", "message": f"{handle} failed result is None"}
 
+            elif fetchall is True and fetch == []:
+                # 防止 fetchall 返回 空列表
+                self.log.info(f'{handle} failed , Because result is Empty List')
+                return {"status": "failed", "message": f"{handle} failed result is Empty List"}
+
             else:
                 self.log.debug(f'{handle} successfully')
 
@@ -93,8 +98,8 @@ class Execute:
                     {"result": fetch})
 
         except sqlite3.OperationalError as ex:
-            if ignores is not None:
-                for i in ignores.ignore:
+            if ignore_list is not None:
+                for i in ignore_list.ignore:
                     if i.feature in str(ex):
                         self.log.info(f"{i.handle} failed , Because '{ex}'")
                         return {"status": "failed", "message": f"{i.message}"}

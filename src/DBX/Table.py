@@ -55,7 +55,7 @@ class Table:
         il = IgnoreList(Ignore("already exists", f"Create a table '{table_name}' in database '{self.db_name}'",
                                f"Table '{table_name}' is already exists in database '{self.db_name}'"))
 
-        return self.Execute.execute(query, handle, ignores=il)
+        return self.Execute.execute(query, handle, ignore_list=il)
 
     def delete_table(self, table_name):
         # 删除表
@@ -68,7 +68,7 @@ class Table:
             Ignore("no such table", f"Delete a table '{table_name}' in database '{self.db_name}'",
                    f"Table '{table_name}' is not exists in database '{self.db_name}'"))
 
-        return self.Execute.execute(query, handle, ignores=il)
+        return self.Execute.execute(query, handle, ignore_list=il)
 
     def rename_table(self, old_name, new_name):
         # 修改表名
@@ -87,7 +87,7 @@ class Table:
                 f"Rename table '{old_name}' to '{new_name}' in database '{self.db_name}'",
                 f"Table '{new_name}' is already exists in database '{self.db_name}'", ),
         )
-        return self.Execute.execute(query, handle, ignores=il)
+        return self.Execute.execute(query, handle, ignore_list=il)
 
     def get_table_all(self):
         # 获取所有表名

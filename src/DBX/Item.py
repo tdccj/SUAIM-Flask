@@ -1,6 +1,7 @@
 # coding = utf-8
+from typing import Union
 
-from src.Execute import Execute, Query
+from src.Execute import Execute, Query, IgnoreList, Ignore
 
 
 class ItemData:
@@ -84,3 +85,25 @@ class Item:
             handle = f"Soft-delete an item {id_db} from table '{table_name}' in database '{self.db_name}'"
 
         return self.Execute.execute(query, handle, commit=True)
+
+    def update_item(self, table_name: str, item_id: int, column_name: str, value: Union[str, int, float, bool]):
+        # 更新（修改）item项的特定数据
+
+        info = self.get_item_data(table_name, item_id)
+
+        if info["status"] == "success":
+            # 判断是否存在有该 item
+            res = self.Execute.execute(
+                Query(
+                    f"UPDATE '{table_name}' SET '{column_name}' = ? WHERE id = ?",
+                    (value, item_id)
+                ),
+                f"Update column '{column_name}' to value '{value}' for the item {item_id} "
+                f"in the table '{table_name}' database '{self.db_name}'",
+                commit=True
+            )
+            return res
+
+        else:
+            info["message"] = f"Not found item {item_id} from table '{table_name}' in database '{self.db_name}'"
+            return info
