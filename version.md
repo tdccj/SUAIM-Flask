@@ -104,3 +104,10 @@
 - Execute.execute 传入参数 ignores 修改为 ignore_list
 - 完成 Item update_item ，并为其添加是否存的判断条件
 - api update_item 尚未应用 DBX
+#### `v0.1.1-21`
+- 修改 Item delete_item 中的 SQL 不安全行为
+- 完成 Item get_items ，为其添加 limit 截取选项，用于限制数据量
+  - 并替代原 get_all_items 的全部功能
+- 将 Item ItemData 迁移至 Execute
+- 在 Execute 中添加 Limit 用于标准化传入 limit 截取范围
+- 新建并完成 Item count_item ，用于统计总项数

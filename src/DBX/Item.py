@@ -1,30 +1,14 @@
 # coding = utf-8
 from typing import Union
 
-from src.Execute import Execute, Query, IgnoreList, Ignore
-
-
-class ItemData:
-    # 用于标准化传入单条item数据
-    def __init__(self,
-                 name: str,
-                 item_type: str,
-                 quantity: float,
-                 ascription: str,
-                 tag: str = None,
-                 price: float = None,
-                 consumables: str = None,
-                 remark: str = None):
-        self.name = name
-        self.type = item_type
-        self.quantity = quantity
-        self.ascription = ascription
-        self.tag = tag
-        self.price = price
-        self.consumables = consumables
-        self.remark = remark
-
-        self.values = (name, item_type, quantity, ascription, tag, price, consumables, remark)
+from src.Execute import (
+    Execute,
+    Query,
+    IgnoreList,
+    Ignore,
+    ItemData,
+    Limit
+)
 
 
 class Item:
@@ -78,10 +62,13 @@ class Item:
     def delete_item(self, table_name: str, id_db: int, real: bool = False):
         # 删除项，默认为软删除即标记删除，而非实质性删除，以提供容错性
         if real:
-            query = f"DELETE from '{table_name}' WHERE id = {id_db}"
+            query = Query(
+                f"DELETE from '{table_name}' WHERE id = ?", (id_db,)
+            )
             handle = f"Hard-Delete an item {id_db} from table '{table_name}' in database '{self.db_name}'"
         else:
-            query = f"UPDATE '{table_name}' SET show = 0 WHERE id = {id_db}"
+            query = Query(f"UPDATE '{table_name}' SET show = 0 WHERE id = ?",
+                          (id_db,))
             handle = f"Soft-delete an item {id_db} from table '{table_name}' in database '{self.db_name}'"
 
         return self.Execute.execute(query, handle, commit=True)
@@ -107,3 +94,32 @@ class Item:
         else:
             info["message"] = f"Not found item {item_id} from table '{table_name}' in database '{self.db_name}'"
             return info
+
+    def get_items(self, table_name: str, limit: Limit = None):
+        # 获取某个表的所有项
+        res = self.Execute.execute(
+            f"SELECT * FROM '{table_name}'",
+            f"Get all items from table '{table_name}' in database '{self.db_name}'",
+            fetchall=True,
+            ignore_list=IgnoreList(
+                Ignore("no such table",
+                       f"Get all items from table '{table_name}' in database '{self.db_name}'",
+                       f"No such table '{table_name}'"),
+            ),
+
+        )
+
+        if limit is not None and res["status"] == "success":
+            res["result"] = res["result"][limit.start:limit.end]
+            res["message"] = f"Get {len(res['result'])} items from table '{table_name}' in database '{self.db_name}'"
+
+        return res
+
+    def count_item(self, table_name: str):
+        # 统计表内总项数
+        return self.Execute.execute(
+            f"SELECT COUNT(*) FROM '{table_name}'",
+            f"Count all items from table '{table_name}' in database '{self.db_name}'",
+            fetchall=True
+        )
+

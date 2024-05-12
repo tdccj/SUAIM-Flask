@@ -6,10 +6,40 @@ from typing import Union
 from src import Logger
 
 
-# ------------------------------
+# -----------------------------------------
 # Execute 模块用于 DBX 数据库操作，
-# 尤其是简化 DBX 的异常处理步骤。
-# ------------------------------
+# 尤其是简化 DBX 的异常处理步骤，并提供标准化类对象。
+# -----------------------------------------
+
+class Limit:
+    # 用于标准化传入 limit 截取范围
+    def __init__(self, start: int, end: int):
+        self.start = start
+        self.end = end
+
+
+class ItemData:
+    # 用于标准化传入单条item数据
+    def __init__(self,
+                 name: str,
+                 item_type: str,
+                 quantity: float,
+                 ascription: str,
+                 tag: str = None,
+                 price: float = None,
+                 consumables: str = None,
+                 remark: str = None):
+        self.name = name
+        self.type = item_type
+        self.quantity = quantity
+        self.ascription = ascription
+        self.tag = tag
+        self.price = price
+        self.consumables = consumables
+        self.remark = remark
+
+        self.values = (name, item_type, quantity, ascription, tag, price, consumables, remark)
+
 
 class Query:
     def __init__(self, command: str, values: tuple = None):
