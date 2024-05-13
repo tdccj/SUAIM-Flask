@@ -13,20 +13,20 @@ from src import Logger
 # -----------------------------------------
 
 
-class ApiExecute:
-    # api 函数装饰器，用于异常处理和记录log
-    def __init__(self):
-        self.log = Logger.logger("api")
-        print(1)
+class ExeWrapper:
+    # 通用函数装饰器，用于异常处理和记录log
+    def __init__(self, name: str):
+        self.name = name
+        self.log = Logger.logger(self.name)
 
-    def __call__(self, func):
+    def try_execute(self, func):
         def wrapper(*args, **kwargs):
             try:
                 res = func(*args, **kwargs)
-                self.log.debug(f"API func {func.__module__}.{func.__name__}() is successfully")
+                self.log.debug(f"{self.name} func {func.__module__}.{func.__name__}() is successfully")
                 return res
             except Exception as e:
-                self.log.warning(f"API func {func.__module__}.{func.__name__}() is failed, Because: {e}")
+                self.log.warning(f"{self.name} func {func.__module__}.{func.__name__}() is failed, Because: {e}")
 
         return wrapper
 
@@ -89,7 +89,7 @@ class IgnoreList:
         self.ignore = args
 
 
-class Execute:
+class ExeTools:
     # 用于 DBX 的执行/异常处理/标准化输出
     def __init__(self, conn: Connection, log: Logger):
         self.conn = conn

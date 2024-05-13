@@ -8,7 +8,7 @@ import sqlite3
 
 from src.DBX.Table import Table
 from src.DBX.Item import Item
-from src.Execute import Execute
+from src.Execute import ExeTools
 from src.Logger import logger
 
 
@@ -30,7 +30,7 @@ class DBX(Table, Item):
         # 标准字段划分，不包含 show 字段
         self.columns = ["id", "name", "type", "tag", "quantity", "price", "consumables", "remark", "ascription"]
 
-        self.Execute = Execute(self.conn, self.log)
+        self.Execute = ExeTools(self.conn, self.log)
 
         # 将 init 后的静态对象传给父类，避免重复初始化
         Table.__init__(self, self.columns, self.Execute, self.db_name)

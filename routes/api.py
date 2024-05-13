@@ -3,7 +3,11 @@
 from flask import Blueprint
 from markdown import markdown
 
+from src.Execute import UniversalExecute
+
 api_bp = Blueprint('api_bp', __name__)
+
+log = UniversalExecute("api")
 
 
 @api_bp.route('/api')

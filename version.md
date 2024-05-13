@@ -121,3 +121,7 @@
 - 为 api index() 和 api database 应用 ApiExecute
 #### `v0.1.1-23`
 - 暂时删除所有 api 调用的 ApiExecute 装饰器，因为装饰器被多次调用
+#### `v0.1.1-24`
+- 重构 ApiExecute 为 ExeWrapper， 增加传入参数 name，提高泛用性
+- 重构 ExeWrapper call 为 try_execute，以便继承 TryExecute
+- 重构 Execute类 为 ExeTools 使其更符合命名规则

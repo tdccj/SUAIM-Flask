@@ -2,7 +2,7 @@
 from typing import Union
 
 from src.Execute import (
-    Execute,
+    ExeTools,
     Query,
     IgnoreList,
     Ignore,
@@ -13,7 +13,7 @@ from src.Execute import (
 
 class Item:
 
-    def __init__(self, columns: list, execute: Execute, db_name: str):
+    def __init__(self, columns: list, execute: ExeTools, db_name: str):
         self.columns = columns
         self.Execute = execute
         self.db_name = db_name
