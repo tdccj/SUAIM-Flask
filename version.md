@@ -125,3 +125,8 @@
 - 重构 ApiExecute 为 ExeWrapper， 增加传入参数 name，提高泛用性
 - 重构 ExeWrapper call 为 try_execute，以便继承 TryExecute
 - 重构 Execute类 为 ExeTools 使其更符合命名规则
+#### `v0.1.1-25`
+- 删除 api table 中的多余引用
+- api create_table 方法改为 POST
+- 成功解决 ExeWrapper 的问题，并在 api 中成功调用为 try_execute
+- api table 已应用 try_execute
