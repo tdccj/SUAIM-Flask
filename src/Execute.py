@@ -29,6 +29,7 @@ class ExeWrapper:
                 self.log.warning(f"{self.name} func {func.__module__}.{func.__name__}() is failed, Because: {e}")
                 return func(*args, **kwargs)
 
+        # 将原函数名赋给装饰器函数，防止 flask 报错
         wrapper.__name__ = func.__name__
 
         return wrapper

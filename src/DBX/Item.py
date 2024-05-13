@@ -95,7 +95,7 @@ class Item:
             info["message"] = f"Not found item {item_id} from table '{table_name}' in database '{self.db_name}'"
             return info
 
-    def get_items(self, table_name: str, limit: Limit = None):
+    def get_items(self, table_name: str, limit: Union[Limit | None] = Limit(0, 100)):
         # 获取某个表的所有项
         res = self.Execute.execute(
             f"SELECT * FROM '{table_name}'",

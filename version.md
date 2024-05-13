@@ -132,3 +132,8 @@
 - api table 已应用 try_execute
 #### `v0.1.1-26`
 - 所有 api 已应用 try_execute
+#### `v0.1.1-27`
+- api update_item 已应用 DBX，并删除其二次查询功能
+- 将 DBX get_items 的 limit 参数默认值改为0-100，仍支持传入None
+- 重构 api get_item_all 为 get_items
+- DB 相关 api 已全部应用 DBX，有待测试
