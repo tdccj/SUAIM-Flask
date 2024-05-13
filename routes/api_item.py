@@ -5,11 +5,13 @@ from src.DBX.Item import ItemData
 from src.Database import DB
 from src.DatabaseX import DBX
 
+from routes.api import try_execute
 
 item_bp = Blueprint('api_item', __name__)
 
 
 @item_bp.route('/api/get/<string:db_path>/<string:db_table>/<int:item_id>', methods=['GET'])
+@try_execute
 def get_item_data(db_path, db_table, item_id):
     # 以id查询物品信息
     db = DBX(db_path)
@@ -17,6 +19,7 @@ def get_item_data(db_path, db_table, item_id):
 
 
 @item_bp.route('/api/create/<string:db_path>/<string:db_table>/item', methods=['POST'])
+@try_execute
 def create_item(db_path, db_table):
     # 在表中创建新物品
 
@@ -30,6 +33,7 @@ def create_item(db_path, db_table):
 
 
 @item_bp.route('/api/delete/<string:db_path>/<string:db_table>/<int:db_id>', methods=['DELETE', 'POST'])
+@try_execute
 def delete_item(db_path, db_table, row_id):
     # 删除物品
     db = DBX(db_path)
@@ -43,6 +47,7 @@ def delete_item(db_path, db_table, row_id):
 
 
 @item_bp.route('/api/update/<string:db_path>/<string:db_table>/<int:db_id>', methods=['POST'])
+@try_execute
 def update_item(db_path, db_table, db_id):
     # 修改物品
 
@@ -74,6 +79,7 @@ def update_item(db_path, db_table, db_id):
 
 
 @item_bp.route('/api/get/<string:db_path>/<string:db_table>/all', methods=['GET'])
+@try_execute
 def get_all_item(db_path, db_table):
     # 连接表单，返回所有item
     db = DB(db_path)

@@ -130,3 +130,5 @@
 - api create_table 方法改为 POST
 - 成功解决 ExeWrapper 的问题，并在 api 中成功调用为 try_execute
 - api table 已应用 try_execute
+#### `v0.1.1-26`
+- 所有 api 已应用 try_execute

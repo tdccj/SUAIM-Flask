@@ -6,10 +6,14 @@ from src.Database import DB
 from src.Printer import printer
 from src.ScanCode import SC
 
+from routes.api import try_execute
+
+
 qr_bp = Blueprint('api_qrCore', __name__)
 
 
 @qr_bp.route('/api/get/<string:db_path>/<string:db_table>/<int:db_id>/qrcode', methods=['GET'])
+@try_execute
 def get_qrcode(db_path, db_table, db_id):
     # 获取QRCode
 
@@ -24,6 +28,7 @@ def get_qrcode(db_path, db_table, db_id):
 
 
 @qr_bp.route('/api/get/<string:db_path>/<string:db_table>/<int:db_id>/print_label', methods=['POST'])
+@try_execute
 def create_print_label(db_path, db_table, db_id):
     # 创建QRCode并获取打印标签
 
@@ -42,6 +47,7 @@ def create_print_label(db_path, db_table, db_id):
 
 
 @qr_bp.route('/api/print_label/<string:db_path>/<string:db_table>/<int:db_id>', methods=['GET'])
+@try_execute
 def print_label_simple(db_path, db_table, db_id):
     warnings.warn("此方法已废弃，很快将被删除，不推荐使用", DeprecationWarning)
 
