@@ -4,8 +4,6 @@ from flask import Blueprint, request, jsonify
 from src.Database import DB
 from src.DatabaseX import DBX
 
-from src.Execute import ApiExecute
-
 
 tb_bp = Blueprint('api_table', __name__)
 
@@ -42,5 +40,7 @@ def rename_table(db_path):
 def get_table_all(db_path):
     # 获取数据库中的所有列表
     db = DBX(db_path)
+
+    print(2)
 
     return jsonify(db.get_table_all()), 200

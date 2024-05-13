@@ -119,3 +119,5 @@
 - 修改 Execute 描述，使其职能范围更符合
 - 为 Execute 添加 ApiExecute 用于 api 的 log 装饰器
 - 为 api index() 和 api database 应用 ApiExecute
+#### `v0.1.1-23`
+- 暂时删除所有 api 调用的 ApiExecute 装饰器，因为装饰器被多次调用

@@ -17,6 +17,7 @@ class ApiExecute:
     # api 函数装饰器，用于异常处理和记录log
     def __init__(self):
         self.log = Logger.logger("api")
+        print(1)
 
     def __call__(self, func):
         def wrapper(*args, **kwargs):

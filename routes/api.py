@@ -2,13 +2,11 @@
 
 from flask import Blueprint
 from markdown import markdown
-from src.Execute import ApiExecute
 
 api_bp = Blueprint('api_bp', __name__)
 
 
 @api_bp.route('/api')
-@ApiExecute()
 def index():
     # 在首页显示 api 文档
 

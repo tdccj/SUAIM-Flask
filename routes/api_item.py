@@ -5,7 +5,6 @@ from src.DBX.Item import ItemData
 from src.Database import DB
 from src.DatabaseX import DBX
 
-from src.Execute import ApiExecute
 
 item_bp = Blueprint('api_item', __name__)
 

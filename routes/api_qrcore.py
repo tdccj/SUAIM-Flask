@@ -6,9 +6,6 @@ from src.Database import DB
 from src.Printer import printer
 from src.ScanCode import SC
 
-from src.Execute import ApiExecute
-
-
 qr_bp = Blueprint('api_qrCore', __name__)
 
 
