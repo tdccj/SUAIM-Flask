@@ -27,6 +27,7 @@ class DBX(Table, Item):
 
         self.cursor = self.conn.cursor()  # 创建游标
 
+        # 标准字段划分，不包含 show 字段
         self.columns = ["id", "name", "type", "tag", "quantity", "price", "consumables", "remark", "ascription"]
 
         self.Execute = Execute(self.conn, self.log)
@@ -38,3 +39,8 @@ class DBX(Table, Item):
     def result(self):
         # 获取 connect(init) 后的返回值
         return self.Execute.execute("", f"Get database '{self.db_name}' connect result", enable=False)
+
+    def __del__(self):
+        self.conn.close()
+        self.log.debug(f"Close database '{self.db_name}' successfully")
+

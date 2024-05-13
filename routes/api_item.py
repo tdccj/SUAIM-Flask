@@ -5,6 +5,8 @@ from src.DBX.Item import ItemData
 from src.Database import DB
 from src.DatabaseX import DBX
 
+from src.Execute import ApiExecute
+
 item_bp = Blueprint('api_item', __name__)
 
 
@@ -28,13 +30,17 @@ def create_item(db_path, db_table):
     return jsonify(db.create_item(db_table, ItemData(**data))), 200
 
 
-@item_bp.route('/api/delete/<string:db_path>/<string:db_table>/<int:db_id>', methods=['DELETE'])
+@item_bp.route('/api/delete/<string:db_path>/<string:db_table>/<int:db_id>', methods=['DELETE', 'POST'])
 def delete_item(db_path, db_table, row_id):
     # 删除物品
-    db = DB(db_path)
-    db.connect_table(db_table)
-    db.delete_item(row_id)
-    return jsonify({'status': 'success', "id": row_id, 'def': 'delete_item'}), 200
+    db = DBX(db_path)
+
+    if request.method == 'POST':
+        real = bool(request.get_json()["real"])
+        return jsonify(db.delete_item(db_table, row_id, real)), 200
+
+    elif request.method == 'DELETE':
+        return jsonify(db.delete_item(db_table, row_id)), 200
 
 
 @item_bp.route('/api/update/<string:db_path>/<string:db_table>/<int:db_id>', methods=['POST'])

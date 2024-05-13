@@ -4,11 +4,11 @@ from logging.handlers import TimedRotatingFileHandler
 import os
 
 
-def logger(name):
+def logger(name: str):
     path = f"../log/{name}"
 
     if not os.path.exists(path):
-        os.makedirs(path)     # 创建日志文件夹
+        os.makedirs(path)  # 创建日志文件夹
 
     # 配置日志
     _logger = logging.getLogger(name)

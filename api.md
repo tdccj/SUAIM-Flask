@@ -4,6 +4,8 @@
 
  SUAIM-溯物 的大部分标准 API 将采用由 `src/Execute.execute( )` 函数定义的 Ee 标准返回。
 
+
+
 **> 使用 Ee 标准化返回的 API 将有 _返回 Ee_ 字样：**
 - 由于状态几乎固定， API 文档中返回内容默认为 `message` 加可选 `result`的示例或描述。
 
@@ -27,8 +29,8 @@
 - `failed`: 执行失败。
 
 
-**▲ 状态为 `failed` 时，将不会返回 `result`。** 这将强制前端校验是否执行成功。
 
+**\* 状态为 `failed` 时，将不会返回 `result`。** 这将强制前端校验是否执行成功。
 
 
 ## 1. 库（Database）

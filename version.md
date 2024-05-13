@@ -111,3 +111,11 @@
 - 将 Item ItemData 迁移至 Execute
 - 在 Execute 中添加 Limit 用于标准化传入 limit 截取范围
 - 新建并完成 Item count_item ，用于统计总项数
+#### `v0.1.1-22`
+- 为 DBX 添加数据库关闭方法的调用
+- api get_table_all 已应用 DBX
+- api delete_item 已应用 DBX , 并兼容 POST
+- 为 logger 添加传入类型指定，增强安全性
+- 修改 Execute 描述，使其职能范围更符合
+- 为 Execute 添加 ApiExecute 用于 api 的 log 装饰器
+- 为 api index() 和 api database 应用 ApiExecute

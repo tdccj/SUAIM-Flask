@@ -7,9 +7,28 @@ from src import Logger
 
 
 # -----------------------------------------
-# Execute 模块用于 DBX 数据库操作，
-# 尤其是简化 DBX 的异常处理步骤，并提供标准化类对象。
+# Execute 模块用于在执行时提供异常处理和日志记录，
+# 并提供标准化类对象。
+# 尤其是简化 DBX 的异常处理步骤。
 # -----------------------------------------
+
+
+class ApiExecute:
+    # api 函数装饰器，用于异常处理和记录log
+    def __init__(self):
+        self.log = Logger.logger("api")
+
+    def __call__(self, func):
+        def wrapper(*args, **kwargs):
+            try:
+                res = func(*args, **kwargs)
+                self.log.debug(f"API func {func.__module__}.{func.__name__}() is successfully")
+                return res
+            except Exception as e:
+                self.log.warning(f"API func {func.__module__}.{func.__name__}() is failed, Because: {e}")
+
+        return wrapper
+
 
 class Limit:
     # 用于标准化传入 limit 截取范围
@@ -70,6 +89,7 @@ class IgnoreList:
 
 
 class Execute:
+    # 用于 DBX 的执行/异常处理/标准化输出
     def __init__(self, conn: Connection, log: Logger):
         self.conn = conn
         self.log = log
