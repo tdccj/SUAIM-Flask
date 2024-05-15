@@ -17,7 +17,7 @@ class DBX(Table, Item):
     def __init__(self, db_name):
         self.log = logger("DatabaseX")  # 创建日志记录
 
-        self.db_name = db_name
+        self.db_name = db_name + (".db" if ".db" not in db_name else "")
 
         self.path = "../database/" + self.db_name
 
@@ -43,4 +43,3 @@ class DBX(Table, Item):
     def __del__(self):
         self.conn.close()
         self.log.debug(f"Close database '{self.db_name}' successfully")
-

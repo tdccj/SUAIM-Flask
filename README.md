@@ -68,9 +68,7 @@ Small-Scale Universal Asset/Inventory Management 泛用小型资产/库存管理
 
 ## 注意事项
 > Database、table名字务必用英文，否则可能会出现问题。<br>
-> 
-> 数据库最好放在程序目录（源目录）下。<br>
-> 
+
 ## 另
 > - 因为技术有限，开发缓慢，目标难以定期定量完成，欢迎加入开发  
 > - 原[SUAIM-Flutter客户端](https://github.com/tdccj/SUAIM-Flutter)已经搁置，正在开发Vue新客户端

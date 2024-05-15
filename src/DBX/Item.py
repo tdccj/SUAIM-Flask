@@ -53,7 +53,8 @@ class Item:
             res1 = self.Execute.execute(
                 "SELECT last_insert_rowid();",
                 "Get the last inserted row id",
-                fetchall=True
+                fetchall=True,
+                commit=True
             )
             res["result"] = res1["result"]
 

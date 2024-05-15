@@ -14,7 +14,7 @@ class Table:
         # 升级 v0.1.1-19 之前的表，为其添加 show 字段
         query = f"ALTER TABLE '{table_name}' ADD COLUMN 'show' INTEGER NOT NULL DEFAULT 1;"
         handle = f"Update table '{table_name}' to v0.1.1-19 in database '{self.db_name}'"
-        return self.Execute.execute(query, handle)
+        return self.Execute.execute(query, handle, commit=True)
 
     def get_normal_columns(self):
         # 获取默认列名
@@ -45,7 +45,7 @@ class Table:
              consumables TEXT,
              remark      TEXT,
              ascription  TEXT    NOT NULL,
-             show        INTEGER NOT NULL DEFAULT 1,
+             show        INTEGER NOT NULL DEFAULT 1
 
              );'''
 
@@ -55,7 +55,7 @@ class Table:
         il = IgnoreList(Ignore("already exists", f"Create a table '{table_name}' in database '{self.db_name}'",
                                f"Table '{table_name}' is already exists in database '{self.db_name}'"))
 
-        return self.Execute.execute(query, handle, ignore_list=il)
+        return self.Execute.execute(query, handle, ignore_list=il, commit=True)
 
     def delete_table(self, table_name):
         # 删除表
@@ -68,7 +68,7 @@ class Table:
             Ignore("no such table", f"Delete a table '{table_name}' in database '{self.db_name}'",
                    f"Table '{table_name}' is not exists in database '{self.db_name}'"))
 
-        return self.Execute.execute(query, handle, ignore_list=il)
+        return self.Execute.execute(query, handle, ignore_list=il, commit=True)
 
     def rename_table(self, old_name, new_name):
         # 修改表名
@@ -87,7 +87,7 @@ class Table:
                 f"Rename table '{old_name}' to '{new_name}' in database '{self.db_name}'",
                 f"Table '{new_name}' is already exists in database '{self.db_name}'", ),
         )
-        return self.Execute.execute(query, handle, ignore_list=il)
+        return self.Execute.execute(query, handle, ignore_list=il, commit=True)
 
     def get_table_all(self):
         # 获取所有表名

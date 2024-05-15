@@ -137,3 +137,14 @@
 - 将 DBX get_items 的 limit 参数默认值改为0-100，仍支持传入None
 - 重构 api get_item_all 为 get_items
 - DB 相关 api 已全部应用 DBX，有待测试
+#### `v0.1.1-28`
+- 为 database.py 添加说明，最早将在 v0.2版本被废弃
+- 为 DBX 添加了一些可能没有实际意义的commit
+- 修改了 Table create_table sql 语句中的一个 bug ，该 bug 导致无法创建表
+- **强制数据库后缀名为.db**，若不是则自动添加
+- 删除 README 过时的注意事项 
+#### `v0.1.1-29`
+- todo 添加数据库信息表
+- todo 使用信息表实现隐藏表和软删除功能
+- todo 从 connect_database 拆分出 create_database 方法
+- todo 添加 database 管理方法
