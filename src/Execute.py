@@ -124,7 +124,11 @@ class ExeTools:
                 if isinstance(query, str):
                     fetch = self.conn.cursor().execute(query).fetchall()
                 elif isinstance(query, Query):
-                    fetch = self.conn.cursor().execute(query.command, query.values).fetchall()
+                    if query.values is None:
+                        fetch = self.conn.cursor().execute(query.command).fetchall()
+                    else:
+                        fetch = self.conn.cursor().execute(query.command, query.values).fetchall()
+
                 # else:
                 #     # 可能不会出现此种情况
                 #     self.log.info(f"{handle} failed , Because query is '{type(query)}' "

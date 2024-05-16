@@ -144,7 +144,14 @@
 - **强制数据库后缀名为.db**，若不是则自动添加
 - 删除 README 过时的注意事项 
 #### `v0.1.1-29`
-- todo 添加数据库信息表
+- 添加表 db_info，用以实现版本验证、登录验证等功能
+- 添加部分 database 管理方法
+- 添加 DBInfo 有待迁移管理方法
+- 为 DBX create_table 添加可选参数 customize=Query ，用于自定义表
+- 现在 DBX 关闭时会自动提交一次
+- 在 Table 中创建 get_table_info 方法
+- DBX create_item 的传入数据兼容 dict，用于自定义项
+#### `v0.1.1-30`
+- todo 为 DBX 增加 管理最后一条 db_info 的能力
 - todo 使用信息表实现隐藏表和软删除功能
 - todo 从 connect_database 拆分出 create_database 方法
-- todo 添加 database 管理方法

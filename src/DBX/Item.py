@@ -35,17 +35,34 @@ class Item:
 
         return res
 
-    def create_item(self, table_name: str, item: ItemData):
+    def create_item(self, table_name: str, item: Union[ItemData, dict]):
         # 创建新物品
-        query = \
-            f"INSERT INTO '{table_name}' (name,type,quantity,ascription,tag,price,consumables,remark) " \
-            f"VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
+        if isinstance(item, ItemData):
+            query = \
+                f"INSERT INTO '{table_name}' (name,type,quantity,ascription,tag,price,consumables,remark) " \
+                f"VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
 
-        values = item.values
+            handle = f"Create an standard item '{item.name}' from table '{table_name}' in database '{self.db_name}'"
+
+            values = item.values
+        else:
+            values = tuple(item.values())
+
+            q_values = ",".join(tuple(["?" for _ in item.values()]))
+
+            fields = ",".join(tuple(item.keys()))
+
+            query = \
+                f"INSERT INTO '{table_name}' ({fields}) " \
+                f"VALUES ({q_values});"
+
+            handle = f"Create an item '{item}' from table '{table_name}' in database '{self.db_name}'"
+
+            # print(query, values)
 
         res = self.Execute.execute(
             Query(query, values),
-            f"Create an item '{item.name}' from table '{table_name}' in database '{self.db_name}'",
+            handle,
             commit=True,
         )
 
@@ -123,4 +140,3 @@ class Item:
             f"Count all items from table '{table_name}' in database '{self.db_name}'",
             fetchall=True
         )
-

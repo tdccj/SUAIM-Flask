@@ -1,6 +1,6 @@
 # coding = utf-8
 
-from src.Execute import ExeTools, Ignore, IgnoreList
+from src.Execute import ExeTools, Ignore, IgnoreList, Query
 
 
 class Table:
@@ -20,9 +20,10 @@ class Table:
         # 获取默认列名
         return self.columns
 
-    def create_table(self, table_name):
+    def create_table(self, table_name, customize: Query = False):
         # 创建表单
 
+        #   标准表结构:
         #   ________________________________________
         #   name        INTEGER 名称
         #   type        TEXT    类型
@@ -35,19 +36,23 @@ class Table:
         #   show        INTEGER 是否显示(主要用于标记删除)
         #   ________________________________________
 
-        query = f'''CREATE TABLE "{table_name}" (
-             id          INTEGER PRIMARY KEY AUTOINCREMENT,
-             name        TEXT    NOT NULL,
-             type        TEXT    NOT NULL,
-             tag         TEXT,
-             quantity    REAL    NOT NULL,
-             price       REAL,
-             consumables TEXT,
-             remark      TEXT,
-             ascription  TEXT    NOT NULL,
-             show        INTEGER NOT NULL DEFAULT 1
+        if not customize:
+            query = f'''CREATE TABLE "{table_name}" (
+                 id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                 name        TEXT    NOT NULL,
+                 type        TEXT    NOT NULL,
+                 tag         TEXT,
+                 quantity    REAL    NOT NULL,
+                 price       REAL,
+                 consumables TEXT,
+                 remark      TEXT,
+                 ascription  TEXT    NOT NULL,
+                 show        INTEGER NOT NULL DEFAULT 1
 
-             );'''
+                 );'''
+
+        else:
+            query = customize
 
         handle = f"Create a table '{table_name}' in '{self.db_name}'"
 
@@ -96,3 +101,10 @@ class Table:
         handle = f"Get all tables from '{self.db_name}'"
 
         return self.Execute.execute(query, handle, fetchall=True)
+
+    def get_table_info(self, table_name):
+        return self.Execute.execute(
+            f"PRAGMA table_info({table_name})",
+            f"Get table info of '{table_name}' in '{self.db_name}'",
+            fetchall=True
+        )
