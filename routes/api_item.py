@@ -15,7 +15,7 @@ item_bp = Blueprint('api_item', __name__)
 def get_item_data(db_path, db_table, item_id):
     # 以id查询物品信息
     db = DBX(db_path)
-    return jsonify(db.get_item_data(db_table, item_id)), 200
+    return jsonify(db.table.get_item_data(db_table, item_id)), 200
 
 
 @item_bp.route('/api/create/<string:db_path>/<string:db_table>/item', methods=['POST'])
@@ -29,7 +29,7 @@ def create_item(db_path, db_table):
     # get data
     data = request.get_json()
 
-    return jsonify(db.create_item(db_table, ItemData(**data))), 200
+    return jsonify(db.table.create_item(db_table, ItemData(**data))), 200
 
 
 @item_bp.route('/api/delete/<string:db_path>/<string:db_table>/<int:db_id>', methods=['DELETE', 'POST'])
@@ -40,10 +40,10 @@ def delete_item(db_path, db_table, row_id):
 
     if request.method == 'POST':
         real = bool(request.get_json()["real"])
-        return jsonify(db.delete_item(db_table, row_id, real)), 200
+        return jsonify(db.table.delete_item(db_table, row_id, real)), 200
 
     elif request.method == 'DELETE':
-        return jsonify(db.delete_item(db_table, row_id)), 200
+        return jsonify(db.table.delete_item(db_table, row_id)), 200
 
 
 @item_bp.route('/api/update/<string:db_path>/<string:db_table>/<int:db_id>', methods=['POST'])
@@ -56,7 +56,7 @@ def update_item(db_path, db_table, db_id):
     column_name = request.get_json()['column_name']
     data = request.get_json()['data']
 
-    return jsonify(db.update_item(db_table, db_id, column_name, data)), 200
+    return jsonify(db.table.update_item(db_table, db_id, column_name, data)), 200
 
 
 @item_bp.route('/api/get/<string:db_path>/<string:db_table>/items', methods=['GET'])
@@ -64,4 +64,4 @@ def update_item(db_path, db_table, db_id):
 def get_items(db_path, db_table):
     # 连接表单，返回所有item
     db = DBX(db_path)
-    return jsonify(db.get_items(db_table)), 200
+    return jsonify(db.table.get_items(db_table)), 200

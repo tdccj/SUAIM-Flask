@@ -1,7 +1,6 @@
 # coding = utf-8
 from datetime import datetime
 import sqlite3
-import time
 
 #   ——————————————————————————————————————————————————————————
 #     DatabaseX 将重构并解决 Database 的低可靠性问题，将提供 容错、验证、
@@ -14,7 +13,7 @@ from src.Execute import ExeTools, Query
 from src.Logger import logger
 
 
-class DBX(Table, Item):
+class DBX:
     # DBX 现在使用多继承实现模块化开发
     def __init__(self, db_name):
         self.log = logger("DatabaseX")  # 创建日志记录
@@ -37,8 +36,8 @@ class DBX(Table, Item):
         self.Execute = ExeTools(self.conn, self.log)
 
         # 将 init 后的静态对象传给父类，避免重复初始化
-        Table.__init__(self, self.columns, self.Execute, self.db_name)
-        Item.__init__(self, self.columns, self.Execute, self.db_name)
+        self.table = Table.__init__(self.columns, self.Execute, self.db_name)
+        self.item = Item.__init__(self.columns, self.Execute, self.db_name)
 
         # 用于管理数据库信息
         self.db_info = self._manager_db_info()
@@ -55,7 +54,7 @@ class DBX(Table, Item):
 
     def _create_db_info(self):
         # 创建服务器信息表
-        return self.create_table(
+        return self.table.create_table(
             "db_info",
             Query('''CREATE TABLE 'db_info' (
                     name    TEXT    PRIMARY KEY ,
