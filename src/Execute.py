@@ -95,7 +95,7 @@ class IgnoreList:
 
 class ExeTools:
     # 用于 DBX 的执行/异常处理/标准化输出
-    def __init__(self, conn: Connection, log: Logger):
+    def __init__(self, conn: Union[Connection, None], log: Logger):
         self.conn = conn
         self.log = log
 
@@ -118,13 +118,17 @@ class ExeTools:
         # 在使用 enable = False 将函数用作标准输出时，
         # 需要传入 query = "" ，以避免出现异常。
 
+        # 用于 enable = False 时，可以不用传入conn
+        if self.conn is None and enable is True:
+            return {"status": "failed", "message": f"Cannot execute query, Because parameter conn is None"}
+
         try:
             fetch = None
             if enable is True:
                 if isinstance(query, str):
                     fetch = self.conn.cursor().execute(query).fetchall()
                 elif isinstance(query, Query):
-                    print(query.command)
+                    # print(query.command)
                     if query.values is None:
                         fetch = self.conn.cursor().execute(query.command).fetchall()
                     else:

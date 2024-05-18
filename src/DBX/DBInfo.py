@@ -53,8 +53,6 @@ class DBInfoManager:
     def manager_info(self):
         tables = self.table.get_table_all()
 
-        status = False
-
         if ('db_info',) not in tables["result"]:
             self.log.info(f"Database '{self.db_name}' db_info table not found")
             # 创建数据库信息表
@@ -68,13 +66,14 @@ class DBInfoManager:
                 self.log.warning(f"Database '{self.db_name}' db_info table creation failed")
             else:
                 self.log.debug(f"Database '{self.db_name}' db_info table successfully found")
-                status = True
 
         else:
             self.log.debug(f"Database '{self.db_name}' db_info table successfully found")
-            status = True
 
-        return self.item.get_items("db_info", None)
+        res = self.get_latest_info()
+        res["message"] = f"Get the current db_info of the database '{self.db_name}' successfully "
+
+        return res
 
     def create_info(self, db_another_name: str = None, ascription: str = "Default user"):
         if db_another_name is None:
@@ -89,7 +88,7 @@ class DBInfoManager:
     def get_latest_info(self):
         info = self.item.get_items("db_info", None)
         if info["status"] == "success":
-            info["message"] = "Get the latest database information successfully"
+            info["message"] = f"Get the latest database information in '{self.db_name}' successfully"
             info["result"] = info["result"][-1]
         return info
 

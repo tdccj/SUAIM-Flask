@@ -1,4 +1,5 @@
 # coding = utf-8
+import os
 from datetime import datetime
 import sqlite3
 
@@ -10,7 +11,7 @@ from src.DBX.DBInfo import DBInfoManager
 
 from src.DBX.Table import Table
 from src.DBX.Item import Item
-from src.Execute import ExeTools, Query
+from src.Execute import ExeTools
 from src.Logger import logger
 
 
@@ -34,7 +35,7 @@ class DBX:
 
         self.Execute = ExeTools(self.conn, self.log)
 
-        # 将 init 后的静态对象传给父类，避免重复初始化
+        # 调用 DBX 的各个模块
         self.table = Table(self.columns, self.Execute, self.db_name)
         self.item = Item(self.columns, self.Execute, self.db_name, self.log)
 
@@ -51,3 +52,11 @@ class DBX:
         self.conn.commit()
         self.conn.close()
         self.log.debug(f"Close database '{self.db_name}' successfully")
+
+    @staticmethod
+    def get_all_db():
+        databases = os.listdir("../database/")
+        databases = list(filter(lambda x: x.endswith(".db"), databases))
+        res = ExeTools(None, logger("DatabaseX")).execute("", "Get all databases successfully", enable=False)
+        res["result"] = databases
+        return res

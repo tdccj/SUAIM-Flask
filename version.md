@@ -161,5 +161,11 @@
 - 使 Item get_item_data 可以指定 index
 - 为 DBX 增加理最新 db_info 的能力
 #### `v0.1.1-32`
+- 更新依赖
+- 修复未知原因的 ScanCode 依赖问题（虽然 ScanCode 可能会被抛弃）
+- 优化了一下 DBInfo 和 DatabaseX
+- ExeTools.execute 参数 enable = False 时，可以用 None 占位而不用传入 conn
+- 为 DBX 添加 get_all_db 静态方法
+#### `v0.1.1-33`
+- todo 为 DBX 添加其他数据库管理方法
 - todo 使用信息表实现隐藏表和软删除功能
-- todo 从 connect_database 拆分出 create_database 方法

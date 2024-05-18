@@ -16,16 +16,17 @@ class SC:
 
     # 创建二维码
     def create_code(self, db, table, id_db):
+        from qrcode.main import QRCode
         import qrcode
 
-        print(self._db.get_item_data(id_db),121)
+        print(self._db.get_item_data(id_db), 121)
         text = f"SUAIM/{db}/{table}" + str(self._db.get_item_data(id_db)[:-2] + (self._db.get_item_data(id_db)[-1],))
 
         # 创建实例
-        qr = qrcode.QRCode(version=2,
-                           error_correction=qrcode.constants.ERROR_CORRECT_M,
-                           box_size=20,
-                           border=4)
+        qr = QRCode(version=2,
+                    error_correction=qrcode.constants.ERROR_CORRECT_M,
+                    box_size=20,
+                    border=4)
         # 添加文本
         qr.add_data(text)
         # 创建qrcode
