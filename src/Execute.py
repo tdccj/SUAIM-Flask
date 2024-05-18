@@ -124,6 +124,7 @@ class ExeTools:
                 if isinstance(query, str):
                     fetch = self.conn.cursor().execute(query).fetchall()
                 elif isinstance(query, Query):
+                    print(query.command)
                     if query.values is None:
                         fetch = self.conn.cursor().execute(query.command).fetchall()
                     else:

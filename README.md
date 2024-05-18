@@ -67,7 +67,8 @@ Small-Scale Universal Asset/Inventory Management 泛用小型资产/库存管理
         - flutter
 
 ## 注意事项
-> Database、table名字务必用英文，否则可能会出现问题。<br>
+- Database、Table名字务必用英文，否则可能会出现问题。  
+- 后端以UTC协调世界时为准，由前端负责转换时区。
 
 ## 另
 > - 因为技术有限，开发缓慢，目标难以定期定量完成，欢迎加入开发  

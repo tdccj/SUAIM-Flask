@@ -1,6 +1,7 @@
 # coding = utf-8
 from typing import Union
 
+from src import Logger
 from src.Execute import (
     ExeTools,
     Query,
@@ -13,15 +14,16 @@ from src.Execute import (
 
 class Item:
 
-    def __init__(self, columns: list, execute: ExeTools, db_name: str):
+    def __init__(self, columns: list, execute: ExeTools, db_name: str, log: Logger):
         self.columns = columns
         self.Execute = execute
         self.db_name = db_name
+        self.log = log
 
-    def get_item_data(self, table_name: str, item_id: int, ):
-        # 根据id查看某行数据
+    def get_item_data(self, table_name: str, item_id: int, index: str = "id"):
+        # 查看某行数据，默认根据id
 
-        query = f"SELECT * FROM '{table_name}' WHERE id = ?"
+        query = f"SELECT * FROM '{table_name}' WHERE {index} = ?"
 
         handle = f"Get an item {item_id} data from table '{table_name}' in database '{self.db_name}'"
 
@@ -91,17 +93,50 @@ class Item:
 
         return self.Execute.execute(query, handle, commit=True)
 
-    def update_item(self, table_name: str, item_id: int, column_name: str, value: Union[str, int, float, bool]):
+    def update_item(self, table_name: str, item_id: int, column_name: Union[str, list],
+                    value: Union[str, int, float, bool, list], index: str = "id"):
         # 更新（修改）item项的特定数据
 
-        info = self.get_item_data(table_name, item_id)
+        query = f"UPDATE '{table_name}' SET '{column_name}' = ? WHERE {index} = ?"
+        values = (value, item_id)
 
+        # 用于处理传入为列表的情况
+        if isinstance(column_name, list) and isinstance(column_name, list):
+            if len(column_name) != len(value):
+                res = self.Execute.execute(
+                    "",
+                    f"Update column '{column_name}' to value '{value}' for the item {item_id} "
+                    f"in the table '{table_name}' database '{self.db_name}'")
+                res["status"] = "failed"
+                res["message"] = (
+                        (f"Update column '{column_name}' to value '{value}' for the item {item_id} in the table "
+                         f"'{table_name}' database '{self.db_name}'") +
+                        "Because 'column_name and value is a list, but the length of them is not equal'")
+                return res
+
+            column_name = '"' + '" = ? ,"'.join(column_name) + '" = ?'
+            values = tuple(value) + (item_id,)
+            query = f"UPDATE '{table_name}' SET {column_name} WHERE {index} = ?"
+        elif isinstance(column_name, str) or isinstance(column_name, tuple):
+            res = self.Execute.execute(
+                "",
+                f"Update column '{column_name}' to value '{value}' for the item {item_id} "
+                f"in the table '{table_name}' database '{self.db_name}'", enable=False)
+            res["status"] = "failed"
+            res["message"] = (
+                    (f"Update column '{column_name}' to value '{value}' for the item {item_id} in the table "
+                     f"'{table_name}' database '{self.db_name}'") +
+                    "Because 'If one of column_name and value is a list, then the other must be a list as well'")
+            return res
+
+        info = self.get_item_data(table_name, item_id, index)
+
+        # 判断是否存在有该 item
         if info["status"] == "success":
-            # 判断是否存在有该 item
             res = self.Execute.execute(
                 Query(
-                    f"UPDATE '{table_name}' SET '{column_name}' = ? WHERE id = ?",
-                    (value, item_id)
+                    query,
+                    values
                 ),
                 f"Update column '{column_name}' to value '{value}' for the item {item_id} "
                 f"in the table '{table_name}' database '{self.db_name}'",

@@ -154,6 +154,12 @@
 #### `v0.1.1-30`
 - **将 DBX 的子模块由继承改为调用模式，以实现二级封装**
 #### `v0.1.1-31`
-- todo 为 DBX 增加 管理最后一条 db_info 的能力
+- 修复上次更新产生的异常调用
+- 将 db_info 相关方法和类迁移到 DBInfo.py 中
+- 修改 db_info 表结构和版本命名
+- 使 Item update_item 可以接受 column 和 value 列表，并支持指定 index
+- 使 Item get_item_data 可以指定 index
+- 为 DBX 增加理最新 db_info 的能力
+#### `v0.1.1-32`
 - todo 使用信息表实现隐藏表和软删除功能
 - todo 从 connect_database 拆分出 create_database 方法
