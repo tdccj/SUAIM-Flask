@@ -15,9 +15,9 @@ from src import Logger
 
 class ExeWrapper:
     # 通用函数装饰器，用于异常处理和记录log
-    def __init__(self, name: str):
+    def __init__(self, name: str, log: Logger = None):
         self.name = name
-        self.log = Logger.logger(self.name)
+        self.log = Logger.logger(self.name) if log is None else log
 
     def try_execute(self, func):
         def wrapper(*args, **kwargs):
@@ -26,8 +26,9 @@ class ExeWrapper:
                 self.log.debug(f"{self.name} func {func.__module__}.{func.__name__}() is successfully")
                 return res
             except Exception as e:
-                self.log.warning(f"{self.name} func {func.__module__}.{func.__name__}() is failed, Because: {e}")
-                return func(*args, **kwargs)
+                self.log.warning(f"{self.name} func {func.__module__}.{func.__name__}() is failed, Because '{e}'")
+                return ExeTools.standard_output(False,
+                                                f"{self.name} func {func.__module__}.{func.__name__}() is")
 
         # 将原函数名赋给装饰器函数，防止 flask 报错
         wrapper.__name__ = func.__name__
@@ -120,7 +121,7 @@ class ExeTools:
 
         # 用于 enable = False 时，可以不用传入conn
         if self.conn is None and enable is True:
-            return {"status": "failed", "message": f"Cannot execute query, Because parameter conn is None"}
+            return {"status": "failed", "message": f"Cannot execute query, Because 'parameter conn is None'"}
 
         try:
             fetch = None
@@ -145,12 +146,12 @@ class ExeTools:
 
             if fetchall is True and fetch is None:
                 # 防止 fetchall 返回 None
-                self.log.info(f'{handle} failed , Because result is None')
+                self.log.info(f'{handle} failed , Because \'result is None\'')
                 return {"status": "failed", "message": f"{handle} failed result is None"}
 
             elif fetchall is True and fetch == []:
                 # 防止 fetchall 返回 空列表
-                self.log.info(f'{handle} failed , Because result is Empty List')
+                self.log.info(f'{handle} failed , Because \'result is Empty List\'')
                 return {"status": "failed", "message": f"{handle} failed result is Empty List"}
 
             else:
@@ -174,9 +175,18 @@ class ExeTools:
                 self.log.warning(f"{handle} failed , Because '{ex}'")
                 return {"status": "failed", "message": f"{handle} failed"}
 
-# if __name__ == '__main__':
-#     a = Ignore("1", "2", "3")
-#     b = Ignore("11", "22", "33")
-#     c = IgnoreList(a, b).ignore
-#     for i in c:
-#         print(i.name)
+    @staticmethod
+    def standard_output(status: bool,
+                        handle: str,
+                        result=None,
+                        log: Logger = None):
+        res = {"status": ("success" if status else "failed"),
+               "message": (handle + " successfully" if status else handle + " failed")}
+
+        if result is not None:
+            res["result"] = result
+
+        if log is not None:
+            log.debug(res["message"])
+
+        return res

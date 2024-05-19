@@ -53,7 +53,7 @@ class DBInfoManager:
     def manager_info(self):
         tables = self.table.get_table_all()
 
-        if ('db_info',) not in tables["result"]:
+        if "result" not in tables or ('db_info',) not in tables["result"]:
             self.log.info(f"Database '{self.db_name}' db_info table not found")
             # 创建数据库信息表
             create = self.create_table()

@@ -167,5 +167,14 @@
 - ExeTools.execute 参数 enable = False 时，可以用 None 占位而不用传入 conn
 - 为 DBX 添加 get_all_db 静态方法
 #### `v0.1.1-33`
+- ExeTools standard_output 将逐步替代 execute 的标准化输出功能
+- 添加 ErrorType.py 用于自定义错误类型
+- 让 ExeWrapper.try_execute 可以接受手动抛出的报错，并自主返回异常信息
+- 修复 DBInfo manager_info 在数据库中没有任何表时会报错的 bug
+- 添加 ExeTools.execute 在某些情况下 Because 后面缺失的引号
+- ExeWrapper.try_execute 已允许传入自定义 logger
+- 将 DBX 所使用的 log 提前到 DBX 类外侧，以兼容静态方法所使用的 ExeWrapper
+- 为 DBX 添加 delete_db 静态方法
+#### `v0.1.1-34`
 - todo 为 DBX 添加其他数据库管理方法
 - todo 使用信息表实现隐藏表和软删除功能

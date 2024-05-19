@@ -1,6 +1,5 @@
 # coding = utf-8
 import os
-from datetime import datetime
 import sqlite3
 
 from src.DBX.DBInfo import DBInfoManager
@@ -11,14 +10,19 @@ from src.DBX.DBInfo import DBInfoManager
 
 from src.DBX.Table import Table
 from src.DBX.Item import Item
-from src.Execute import ExeTools
+from src.Execute import ExeTools, ExeWrapper
 from src.Logger import logger
+
+from src.ErrorType import ReturnError
+
+log = logger("DatabaseX")
+exeDBX = ExeWrapper("DatabaseX", log).try_execute
 
 
 class DBX:
     # DBX 现在使用多继承实现模块化开发
     def __init__(self, db_name):
-        self.log = logger("DatabaseX")  # 创建日志记录
+        self.log = log  # 创建日志记录
 
         self.db_name = db_name + (".db" if ".db" not in db_name else "")
 
@@ -54,9 +58,22 @@ class DBX:
         self.log.debug(f"Close database '{self.db_name}' successfully")
 
     @staticmethod
+    @exeDBX
     def get_all_db():
         databases = os.listdir("../database/")
         databases = list(filter(lambda x: x.endswith(".db"), databases))
-        res = ExeTools(None, logger("DatabaseX")).execute("", "Get all databases successfully", enable=False)
+        res = ExeTools(None, logger("DatabaseX")).execute("", "Get all databases", enable=False)
         res["result"] = databases
         return res
+
+    @staticmethod
+    @exeDBX
+    def delete_db(db_name):
+        db_name = db_name + (".db" if ".bd" not in db_name else "")
+        path = f"../database/{db_name}"
+        if os.path.exists(path):
+            os.remove(path)
+            if not os.path.exists(path):
+                return ExeTools.standard_output(True, f"Delete database {db_name}")
+        # 如果失败
+        raise ReturnError()
