@@ -176,5 +176,14 @@
 - 将 DBX 所使用的 log 提前到 DBX 类外侧，以兼容静态方法所使用的 ExeWrapper
 - 为 DBX 添加 delete_db 静态方法
 #### `v0.1.1-34`
+- 修改 README 说明
+- 修复了 delete_db 的 name 判断条件的 bug
+- 为 ExeTools standard 添加 reason 可选参数,在 status is False 时生效
+- 为 ExeWrapper.try_execute 的日志输出添加参数输出
+- 修复 ExeTools standard_output 的 reason 格式异常
+- 为 ExeWrapper.try_execute 添加 ReturnError 判断
+- 创建 DBX _process_db 用于 DBX OS 相关的判断操作
+- 修改 DBX delete_db 为调用 _process_db
+#### `v0.1.1-35`
 - todo 为 DBX 添加其他数据库管理方法
 - todo 使用信息表实现隐藏表和软删除功能

@@ -1,6 +1,7 @@
 # coding = utf-8
 import os
 import sqlite3
+from typing import Callable
 
 from src.DBX.DBInfo import DBInfoManager
 #   ——————————————————————————————————————————————————————————
@@ -68,12 +69,21 @@ class DBX:
 
     @staticmethod
     @exeDBX
-    def delete_db(db_name):
-        db_name = db_name + (".db" if ".bd" not in db_name else "")
+    def delete_db(db_name: str):
+        return DBX._process_db(db_name, os.remove, "Delete", asc=False)
+
+    @staticmethod
+    def _process_db(db_name: str, func: Callable, handle: str, asc: bool = True, **kwargs):
+        # 用于处理带有确认存在-执行-确认不存在逻辑的数据库os操作
+        # 当 asc = False 时，逻辑为 确认不存在-执行-确认存在
+        # 注意不得加 exeDBX 装饰器，而应在具体操作中加，不然会返回 None
+        db_name = db_name + (".db" if ".db" not in db_name else "")
         path = f"../database/{db_name}"
-        if os.path.exists(path):
-            os.remove(path)
-            if not os.path.exists(path):
-                return ExeTools.standard_output(True, f"Delete database {db_name}")
+        if os.path.exists(path) and asc:
+            func(path)
+            if not os.path.exists(path) and asc:
+                return ExeTools.standard_output(True, f"{handle} database {db_name}")
+
+        # todo 可以考虑细化 raise 的返回类型，在不同位置增加不同 raise
         # 如果失败
-        raise ReturnError()
+        raise ReturnError

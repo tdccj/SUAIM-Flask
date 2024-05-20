@@ -4,6 +4,7 @@ from sqlite3 import Connection
 from typing import Union
 
 from src import Logger
+from src.ErrorType import ReturnError
 
 
 # -----------------------------------------
@@ -23,10 +24,18 @@ class ExeWrapper:
         def wrapper(*args, **kwargs):
             try:
                 res = func(*args, **kwargs)
-                self.log.debug(f"{self.name} func {func.__module__}.{func.__name__}() is successfully")
+                self.log.debug(f"{self.name} func {func.__module__}.{func.__name__}() is successfully,"
+                               f" Parameter args:{args}, kwargs:{kwargs}")
                 return res
+            except ReturnError as e:
+                self.log.warning(f"{self.name} func {func.__module__}.{func.__name__}() is failed,"
+                                 f" Because '{e}', Parameter args:{args}, kwargs:{kwargs}")
+                return ExeTools.standard_output(False,
+                                                f"{self.name} func {func.__module__}.{func.__name__}() is",
+                                                reason="Invalid return value, Maybe there is no found")
             except Exception as e:
-                self.log.warning(f"{self.name} func {func.__module__}.{func.__name__}() is failed, Because '{e}'")
+                self.log.warning(f"{self.name} func {func.__module__}.{func.__name__}() is failed,"
+                                 f" Because '{e}', Parameter args:{args}, kwargs:{kwargs}")
                 return ExeTools.standard_output(False,
                                                 f"{self.name} func {func.__module__}.{func.__name__}() is")
 
@@ -179,7 +188,8 @@ class ExeTools:
     def standard_output(status: bool,
                         handle: str,
                         result=None,
-                        log: Logger = None):
+                        log: Logger = None,
+                        reason: str = None):
         res = {"status": ("success" if status else "failed"),
                "message": (handle + " successfully" if status else handle + " failed")}
 
@@ -188,5 +198,8 @@ class ExeTools:
 
         if log is not None:
             log.debug(res["message"])
+
+        if status is False and reason is not None:
+            res["message"] += f", Because '{reason}'"
 
         return res
